@@ -1,0 +1,330 @@
+/* cores */
+:root {
+    --cinza-color: #363636;
+    --cinza-claro-1: #D9D9D9;
+    --cinza-claro-2: #7A7A7A;
+    --cinza-medio: #4F4F4F;
+    --cinza-escuro-1: #202223a9;
+    --cinza-escuro-2: #151617;
+    --cinza-escuro-nav: #303030;
+    --fonte-figtree: "Figtree", sans-serif;
+    --fonte-bebas: "Bebas Neue", sans-serif;
+    --fonte-anton: "Anton", sans-serif;
+}
+
+/*Padroes para tela*/
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo-container {
+    width: 100vw;
+    height: 14vh;
+    /* background-color: rgb(0, 115, 255); */
+    padding: 1% 3%;
+    display: flex;
+    align-items: center;
+}
+
+.titulo-container h1 {
+    color: #000000;
+    font-family: var(--fonte-anton);
+    font-size: 70px;
+    font-weight: 300;
+    margin: 0;
+}
+
+.d {
+    display: none;
+}
+
+/*navbar*/
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 20px;
+    z-index: 999;
+}
+
+.navbar {
+    background-color: var(--cinza-escuro-nav);
+    backdrop-filter: blur(5px);
+    width: 90%;
+    height: 4rem;
+    border-radius: 20px;
+    padding: 0% 2%;
+    display: flex;
+    font-family: var(--fonte-figtree);
+}
+
+.navbar a {
+    text-decoration: none;
+    outline: none;
+    color: white;
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 20%;
+}
+
+.navbar .logo div {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: 100%;
+    padding: 5px;
+}
+
+.navbar .logo img {
+    height: 100%;
+}
+
+.navbar .logo div:hover::after {
+    content: 'GearUP';
+    background-color: red;
+}
+
+.navbar .links {
+    width: 55%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+
+.navbar .links a {
+    margin: 0px 10px;
+    transition: 0.2s;
+}
+
+.navbar .links a:hover {
+    color: var(--cinza-claro-1);
+}
+
+.navbar .acessos {
+    width: 25%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.navbar .acessos a {
+    height: 60%;
+    width: 40%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.navbar .acessos a:hover {
+    background-color: var(--cinza-medio);
+}
+
+.navbar .acessos div {
+    width: 2px;
+    height: 60%;
+    background-color: white;
+}
+
+/*Banner*/
+.fundo-banner {
+    width: 100vw;
+    height: 100vh;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    background-color: var(--cinza-escuro-2);
+}
+
+.fundo-banner p {
+    font-size: 400px;
+    font-family: var(--fonte-bebas);
+    color: var(--cinza-color);
+}
+
+.frente-banner {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: absolute;
+    padding: 1% 5%;
+}
+
+.frente-banner .escrita-banner {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 15%;
+}
+
+.frente-banner .escrita-banner p {
+    font-family: var(--fonte-bebas);
+    color: #FFF;
+    font-size: 50px;
+}
+
+
+/**/
+
+
+/*Descubra*/
+.descubra .container {
+    width: 100%;
+    background-color: var(--cinza-medio);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 1% 1%;
+    overflow: hidden;
+}
+
+.descubra .card-horizontal {
+    width: 550px;
+    height: 275px;
+    margin: 10px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.descubra .card-vertical {
+    width: 430px;
+    height: 650px;
+    border-radius: 20px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.descubra .explore-carro {
+    background-image: url(./assets/explore-carro.png);
+    background-size: cover;
+}
+
+.descubra .explore-eventos {
+    background-image: url(./assets/explore-eventos.png);
+    background-size: cover;
+}
+
+.descubra .explore-filme {
+    background-image: url(./assets/explore-filme.png);
+    background-size: cover;
+}
+
+.descubra .explore-jogos {
+    background-image: url(./assets/explore-jogos.png);
+    background-size: cover;
+}
+
+.descubra .card {
+    transition: .6s;
+}
+
+.descubra .card .filtro {
+    width: 100%;
+    height: 100%;
+    background-color: #151617e3;
+    padding: 2% 5%;
+    color: #fff;
+    transition: .6s;
+}
+
+.descubra .card .filtro h2 {
+    font-family: var(--fonte-anton);
+    font-weight: 300;
+    font-size: 35px;
+}
+
+.descubra .card-vertical {
+    text-align: end;
+}
+
+.descubra .card:hover {
+    scale: 1.01;
+}
+
+.descubra .card .filtro:hover {
+    background-color: transparent;
+    cursor: pointer;
+}
+
+/*Conecte-se*/
+.conecte-se .logos {
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.conecte-se .logos img {
+    width: 200px;
+    filter: grayscale(100%);
+    transition: .5s;
+}
+
+.conecte-se .logos img:hover {
+    filter: grayscale(0%);
+}
+
+.conecte-se .container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.conecte-se .card {
+    display: flex;
+    width: 450px;
+    height: 175px;
+    border-radius: 20px;
+    background-color: var(--cinza-claro-1);
+}
+
+.conecte-se .card .img-card {
+    width: 25%;
+    padding: 3% 2%;
+}
+.conecte-se .card img{
+    border-radius: 50%;
+    width: 100%;
+}
+.conecte-se .card .infos-card{
+    width: 70%;
+    padding: 3% 2%;
+    font-family: var(--fonte-figtree);
+}
+.conecte-se .card .infos-card{
+    font-size: 24px;
+}
+.conecte-se .card .infos-card h1{
+    margin: 5%;
+    font-size: 24px;
+}
