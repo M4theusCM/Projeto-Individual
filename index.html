@@ -15,11 +15,16 @@
 </head>
 
 <body>
-    <nav class="">
+    <nav>
         <div class="navbar">
             <div class="logo">
                 <div>
-                    <img src="./src/logo.png" alt="GearUP">
+                    <div id="logo-img">
+                        <img src="./src/logo.png" alt="GearUP">
+                    </div>
+                    <div class="logo-nome" id="logo-nome-img">
+                        <img src="./src/gearup - logo.png" alt="GearUP">
+                    </div>
                 </div>
             </div>
             <div class="links">
@@ -57,8 +62,34 @@
             </div>
             <div class="area-card">
                 <div class="card">
-                    <div class="icons"></div>
-                    <div class="desc"></div>
+                    <div class="icons">
+                        <div class="logos">
+                            <img src="./src/logos/descubra.png" alt="Descubra">
+                        </div>
+                    </div>
+                    <div class="desc">
+                        <span>Uma rede social que reune tudo sobre o mundo automotivo</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icons">
+                        <div class="logos">
+                            <img src="./src/logos/conecte-se.png" alt="Conect-se">
+                        </div>
+                    </div>
+                    <div class="desc">
+                        <span>Compartilhe experiencias, conheça historias e conecte-se</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icons">
+                        <div class="logos">
+                            <img src="./src/logos/joge.png" alt="Experimente">
+                        </div>
+                    </div>
+                    <div class="desc">
+                        <span>Descubra eventos, filmes, jogos e viva experiencias reais</span>
+                    </div>
                 </div>
             </div>
             <div class="area-carros" id="div_explore_carros">
@@ -140,7 +171,45 @@
             </div>
         </div>
     </div>
-    <div class="container" id="contato">contato</div>
+    <div class="container contato" id="contato">
+        <div class="efeito">
+            <img src="./src/efeitos/contatdo-img.png" alt="logos">
+        </div>
+        <div class="container">
+            <div class="titulo-container">
+                <h1>Alguma Duvida?</h1>
+            </div>
+            <div class="area-fomulario">
+                <!-- <form> -->
+                <fieldset>
+                    <legend>Contato</legend>
+                    <div class="linha">
+                        <label for="ipt_nome">Digite seu nome</label>
+                        <input type="text" id="ipt_nome" placeholder="Ex: Matheus C. Menezes">
+                    </div>
+                    <div class="linha">
+                        <label for="ipt_email">Digite seu Email:</label>
+                        <input type="text" id="ipt_email" placeholder="Ex: gearup@email.com">
+                    </div>
+                    <div class="linha">
+                        <label for="ipt_tema">Digite o tema:</label>
+                        <input type="text" id="ipt_tema" placeholder="Ex: Duvida ou sujestão">
+                    </div>
+                    <div class="linha">
+                        <label for="textarea_comentario">Comentario</label>
+                        <textarea id="textarea_comentario"></textarea>
+                    </div>
+                    <div class="enviar">
+                        <button onclick="enviar()">Enviar</button>
+                    </div>
+                </fieldset>
+                <!-- </form> -->
+            </div>
+            <div id="pop_up">
+                <p>Mesagem enviada com sucesso!</p>
+            </div>
+        </div>
+    </div>
     <footer>
         <div class="efeito">
             <img src="./src/efeitos/gearup - effect.png" alt="">
@@ -181,6 +250,7 @@
             </div>
         </div>
     </footer>
+
 </body>
 
 </html>
@@ -190,10 +260,32 @@
         var imgCarro = [
             `<img src="./src/carros/Porsche.png" alt="Porsche">`,
             `<img src="./src/carros/Corvette.png" alt="Corvette">`,
-            `<img src="./src/carros/McLaren.png" alt="McLaren">`
+            `<img src="./src/carros/McLaren.png" alt="McLaren">`,
+            `<img src="./src/carros/audi r8.png" alt="Audi R8">`,
+            `<img src="./src/carros/audi rs6.png" alt="Audi RS6">`,
+            `<img src="./src/carros/Lamborghini.png" alt="Lamborghini">`,
+            `<img src="./src/carros/Mustang.png" alt="Mustang">`,
+            `<img src="./src/carros/supra.png" alt="Supra">`
         ]
-        var aleatorio = parseInt(Math.random() * 3)
+        var tamanhoVetor = imgCarro.length
+        var aleatorio = parseInt(Math.random() * tamanhoVetor)
         div_explore_carros.innerHTML = imgCarro[aleatorio]
-        console.log(aleatorio)
+        console.log(tamanhoVetor)
+    }
+
+    function enviar() {
+        var nome = ipt_nome.value
+        var email = ipt_email.value
+        var tema = ipt_tema.value
+        var comentario = textarea_comentario.value
+
+        if (
+            nome != '' ||
+            email != '' ||
+            tema != '' ||
+            comentario != ''
+        ) {
+            pop_up.style.animation = 'animacao-pop-up 2s'
+        }
     }
 </script>

@@ -4,7 +4,7 @@
     --cinza-claro-1: #D9D9D9;
     --cinza-claro-2: #7A7A7A;
     --cinza-medio: #4F4F4F;
-    --cinza-escuro-1: #202223a9;
+    --cinza-escuro-1: #202223;
     --cinza-escuro-2: #151617;
     --cinza-escuro-nav: #303030;
     --fonte-figtree: "Figtree", sans-serif;
@@ -101,12 +101,22 @@ nav {
 
 .navbar .logo img {
     height: 100%;
+    margin: 5px;
 }
 
-.navbar .logo div:hover::after {
-    content: 'GearUP';
-    background-color: red;
+.navbar #logo-nome-img{
+    visibility: hidden;
+    overflow: hidden;
 }
+
+#logo-img:hover + #logo-nome-img {
+    visibility: visible;
+    cursor: pointer;
+    /* animation: animation-logo 1s; */
+    transition: 0.5s;
+}
+
+
 
 .navbar .links {
     width: 55%;
@@ -204,7 +214,7 @@ nav {
 }
 
 .explore .efeito img {
-    width: 1000px;
+    width: 1100px;
     margin: 0px 0px -30px -30px;
 }
 
@@ -214,11 +224,59 @@ nav {
     flex-direction: column;
 
 }
-.explore .area-card{
+
+.explore .area-card {
     width: 100%;
     height: 30%;
+    padding: 0% 5%;
+    display: flex;
 }
-.explore .area-carros{
+
+.explore .card {
+    width: 300px;
+    height: 100%;
+    border-radius: 20px;
+    background-color: rgba(196, 196, 196, 0.714);
+    backdrop-filter: blur(2px);
+    margin-right: 30px;
+}
+
+.explore .card .icons {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    padding-left: 10%;
+}
+
+.explore .card .icons .logos {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: white;
+    border: solid 2px black;
+    overflow: hidden;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.explore .card img {
+    width: 100%;
+    height: 100%;
+}
+
+.explore .card .desc {
+    padding: 0% 5%;
+    font-family: var(--fonte-figtree);
+    font-weight: 400;
+    font-size: 22px;
+    text-align: center;
+}
+
+
+.explore .area-carros {
     width: 100%;
     height: 60%;
     display: flex;
@@ -226,7 +284,8 @@ nav {
     justify-content: end;
     overflow: hidden;
 }
-.explore .area-carros img{
+
+.explore .area-carros img {
     width: 1300px;
     margin-right: -390px;
     margin-bottom: -150px;
@@ -387,6 +446,111 @@ nav {
 }
 
 /*Contato*/
+.contato .efeito {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    overflow: hidden;
+}
+
+.contato .efeito img {
+    height: 100%;
+}
+
+.contato .container {
+    position: absolute;
+}
+
+.contato .area-fomulario {
+    width: 50%;
+    height: 100%;
+    padding: 2% 2%;
+}
+
+.contato .area-fomulario fieldset {
+    border-radius: 10px;
+    border: solid 2px;
+}
+
+.contato .area-fomulario legend {
+    font-family: var(--fonte-anton);
+    font-size: 30px;
+}
+
+.contato .area-fomulario .linha {
+    display: flex;
+    flex-direction: column;
+    margin: 1% 0%;
+}
+
+.contato .area-fomulario label {
+    font-family: var(--fonte-anton);
+    font-size: 24px;
+}
+
+.contato .area-fomulario input {
+    padding: 1% 2%;
+    font-family: var(--fonte-figtree);
+    font-size: 18px;
+    background-color: var(--cinza-claro-1);
+    border: none;
+}
+
+.contato .area-fomulario textarea {
+    width: 100%;
+    height: 150px;
+    font-family: var(--fonte-figtree);
+    font-size: 18px;
+    background-color: var(--cinza-claro-1);
+    border: none;
+    resize: none;
+}
+
+.contato .area-fomulario .enviar {
+    display: flex;
+    justify-content: end;
+    margin-top: 2%;
+}
+
+.contato .area-fomulario button {
+    font-family: var(--fonte-bebas);
+    font-size: 30px;
+    font-weight: 200;
+    background-color: var(--cinza-claro-1);
+    border: none;
+    padding: 0% 10%;
+    border-radius: 5px;
+    transition: .5s;
+}
+
+.contato .area-fomulario button:hover {
+    background-color: var(--cinza-claro-2);
+    cursor: pointer;
+}
+
+#pop_up{
+    position: absolute;
+    background-image: url(./src/efeitos/gearup\ -\ efeito-claro.png);
+    background-size: 150px;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: bottom;
+    width: 300px;
+    height: 100px;
+    border-radius: 5px;
+    background-color: var(--cinza-claro-1);
+    align-self: self-end;
+    justify-self: end;
+    margin: 35% 5% 0% 0%;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 300;
+    color: var(--cinza-escuro-1);
+    font-family: var(--fonte-bebas);
+    opacity: 0;
+    align-items: center;
+}
 
 /*Footer*/
 footer {
@@ -492,4 +656,26 @@ footer .copy {
 footer .copy p {
     font-family: var(--fonte-figtree);
     font-weight: 400;
+}
+
+/*Animação*/
+@keyframes animation-logo{
+    0%{
+        width: 0px;
+    }
+    100%{
+        width: 150px;
+    }
+}
+@keyframes animacao-pop-up{
+    0%{
+        opacity: 1;
+    }
+    99%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+
 }
