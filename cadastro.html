@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GearUP - Cadastro</title>
+    <link rel="stylesheet" href="./styles/acesso.css">
+    <link rel="icon" href="./src/logo.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card card-cad">
+            <div class="banner banner-cad">
+                <div>
+                    <a href="./index.html">
+                        <img src="./src/acessos/Arrow 1.png" alt="Sair">
+                    </a>
+                    <span>Bem Vindo</span>
+                </div>
+            </div>
+            <div class="form cad">
+                <div class="titulos">
+                    <h1>Cadastre-se</h1>
+                </div>
+                <div class="forms ">
+                    <div class="linha">
+                        <label>
+                            Digite seu email ou telefone:
+                            <input type="text" id="ipt_indentificador">
+                        </label>
+                    </div>
+                    <div class="linha">
+                        <label>
+                            Digite seu nome:
+                            <input type="text" id="ipt_nome">
+                        </label>
+                    </div>
+                    <div class="linha">
+                        <label>
+                            Digite seu nome de usuario:
+                            <input type="text" id="ipt_nickname">
+                        </label>
+                    </div>
+                    <div class="linha">
+                        <label>
+                            Digite sua data de nascimento:
+                            <input type="date" id="ipt_data_nasc">
+                        </label>
+                    </div>
+                    <div class="linha">
+                        <label>
+                            Digite sua senha:
+                            <input type="password" id="ipt_password">
+                        </label>
+                    </div>
+                    <div class="linha botoes-area">
+                        <button class="enviar" onclick="login()">Login</button>
+                        <button class="google" onclick="google()">
+                            <img src="./src/acessos/Search.png" alt="G">
+                            Continuar com o Google
+                        </button>
+                    </div>
+                </div>
+                <div class="links">
+                    <a href="./login.html">Já possui conta? <span>faça login</span></a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

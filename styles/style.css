@@ -321,22 +321,22 @@ nav {
 }
 
 .descubra .explore-carro {
-    background-image: url(./src/eventos/explore-carro.png);
+    background-image: url(../src/eventos/explore-carro.png);
     background-size: cover;
 }
 
 .descubra .explore-eventos {
-    background-image: url(./src/eventos/explore-eventos.png);
+    background-image: url(../src/eventos/explore-eventos.png);
     background-size: cover;
 }
 
 .descubra .explore-filme {
-    background-image: url(./src/eventos/explore-filme.png);
+    background-image: url(../src/eventos/explore-filme.png);
     background-size: cover;
 }
 
 .descubra .explore-jogos {
-    background-image: url(./src/eventos/explore-jogos.png);
+    background-image: url(../src/eventos/explore-jogos.png);
     background-size: cover;
 }
 
