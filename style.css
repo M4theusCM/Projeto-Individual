@@ -548,8 +548,8 @@ nav {
     font-weight: 300;
     color: var(--cinza-escuro-1);
     font-family: var(--fonte-bebas);
-    opacity: 0;
     align-items: center;
+    display: none;
 }
 
 /*Footer*/
@@ -666,16 +666,4 @@ footer .copy p {
     100%{
         width: 150px;
     }
-}
-@keyframes animacao-pop-up{
-    0%{
-        opacity: 1;
-    }
-    99%{
-        opacity: 1;
-    }
-    100%{
-        opacity: 0;
-    }
-
 }

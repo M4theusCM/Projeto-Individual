@@ -270,7 +270,6 @@
         var tamanhoVetor = imgCarro.length
         var aleatorio = parseInt(Math.random() * tamanhoVetor)
         div_explore_carros.innerHTML = imgCarro[aleatorio]
-        console.log(tamanhoVetor)
     }
 
     function enviar() {
@@ -285,7 +284,11 @@
             tema != '' ||
             comentario != ''
         ) {
-            pop_up.style.animation = 'animacao-pop-up 2s'
+            pop_up.style.display = 'flex'
+            console.log(pop_up.style.diplay)
+            setTimeout(() => {
+                pop_up.style.display = 'none'
+            }, 5000)
         }
     }
 </script>
