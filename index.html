@@ -280,6 +280,11 @@
         var tamanhoVetor = imgCarro.length
         var aleatorio = parseInt(Math.random() * tamanhoVetor)
         div_explore_carros.innerHTML = imgCarro[aleatorio]
+
+        setInterval(() => {
+            aleatorio = parseInt(Math.random() * tamanhoVetor)
+            div_explore_carros.innerHTML = imgCarro[aleatorio]
+        }, 12000)
     }
 
     function enviar() {
@@ -289,9 +294,9 @@
         var comentario = textarea_comentario.value
 
         if (
-            nome != '' ||
-            email != '' ||
-            tema != '' ||
+            nome != '' &&
+            email != '' &&
+            tema != '' &&
             comentario != ''
         ) {
             pop_up.style.display = 'flex'

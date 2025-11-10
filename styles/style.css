@@ -531,7 +531,7 @@ nav {
 
 #pop_up{
     position: absolute;
-    background-image: url(./src/efeitos/gearup\ -\ efeito-claro.png);
+    background-image: url(../src/efeitos/gearup\ -\ efeito-claro.png);
     background-size: 150px;
     background-repeat: no-repeat;
     background-position-x: right;
