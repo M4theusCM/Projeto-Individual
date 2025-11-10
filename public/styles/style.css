@@ -307,7 +307,7 @@ nav {
 .descubra .card-horizontal {
     width: 550px;
     height: 275px;
-    margin: 10px;
+    margin: 6px 0px;
     overflow: hidden;
     border-radius: 20px;
 }
