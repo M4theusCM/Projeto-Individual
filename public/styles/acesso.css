@@ -277,3 +277,26 @@ body {
     text-align: center;
     padding: 5% 0%;
 }
+
+#pop_up_erro{
+    position: absolute;
+    background-image: url(../src/efeitos/gearup\ -\ efeito-claro.png);
+    background-size: 150px;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: bottom;
+    width: 300px;
+    height: 100px;
+    border-radius: 5px;
+    background-color: var(--cinza-claro-1);
+    align-self: self-end;
+    justify-self: end;
+    margin: 35% 5% 0% 0%;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 300;
+    color: var(--cinza-escuro-1);
+    font-family: var(--fonte-bebas);
+    align-items: center;
+    display: none;
+}

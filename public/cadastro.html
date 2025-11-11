@@ -7,6 +7,7 @@
     <title>GearUP - Cadastro</title>
     <link rel="stylesheet" href="./styles/acesso.css">
     <link rel="icon" href="./src/logo.png">
+    <script src="./js/sessao.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -33,7 +34,7 @@
                     <div class="linha">
                         <label>
                             Digite seu email ou telefone:
-                            <input type="text" id="ipt_indentificador">
+                            <input type="text" id="ipt_indentificador" onkeyup="indentificador()">
                         </label>
                     </div>
                     <div class="linha">
@@ -61,7 +62,7 @@
                         </label>
                     </div>
                     <div class="linha botoes-area">
-                        <button class="enviar" onclick="login()">Login</button>
+                        <button class="enviar" onclick="cadastrar()">Cadastrar</button>
                         <button class="google" onclick="google()">
                             <img src="./src/acessos/Search.png" alt="G">
                             Continuar com o Google
@@ -70,9 +71,154 @@
                 </div>
                 <div class="links">
                     <a href="./login.html">Já possui conta? <span>faça login</span></a>
+                </div>
+            </div>
+            <div id="pop_up_erro">
+                <p id="msg_erro">Mesagem enviada com sucesso!</p>
             </div>
         </div>
-    </div>
 </body>
+<script>
+    var emailVar = 'NULL'
+    var tellVar = 'NULL'
+    function cadastrar() {
+        var nomeVar = ipt_nome.value
+        var nickNamevar = ipt_nickname.value
+        var dtNascVar = ipt_data_nasc.value
+        var senhaVar = ipt_password.value
+
+        /*validações*/
+        if ((emailVar == 'NULL' && tellVar == 'NULL') || ipt_indentificador.length == 0) {
+            exibirErros(0)
+        } else if (emailVar != 'NULL' && (emailVar.includes('@', '.') == false)) {
+            exibirErros(1)
+        } else if (nomeVar == '') {
+            exibirErros(2)
+        } else if (nickNamevar == '') {
+            exibirErros(3)
+        } else if (dtNascVar == '') {
+            exibirErros(4)
+        } else if (senhaVar == '') {
+            exibirErros(5)
+        } else if (senhaVar.length <= 6) {
+            exibirErros(6)
+        } else { // cadastro
+            // Enviando o valor da nova input
+
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    // crie um atributo que recebe o valor recuperado aqui
+                    // Agora vá para o arquivo routes/usuario.js
+                    nomeServer: nomeVar,
+                    emailServer: emailVar,
+                    tellServer: tellVar,
+                    nickServer: nickNamevar,
+                    dtNascServer: dtNascVar,
+                    senhaServer: senhaVar,
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+                        exibirSucesso()
+
+                        setTimeout(() => {
+                            window.location = "./login.html";
+                        }, "3000");
+
+                        limparFormulario();
+                        finalizarAguardar();
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                    finalizarAguardar();
+                });
+
+            console.log("Pronto para o cad ")
+        }
+
+    }
+
+    function indentificador() {
+        var indentificador = ipt_indentificador.value
+        /*Tira a mascara antiga*/
+        indentificador = indentificador.replace('(', '').replace(')', '').replace(' ', '').replace('-', '')
+        var tamanho = indentificador.length
+        var letras = [
+            'a', 'b', 'c', 'd', 'e', 'f', 'g',
+            'h', 'i', 'j', 'k', 'l', 'm', 'n',
+            'o', 'p', 'q', 'r', 's', 't', 'u',
+            'v', 'w', 'x', 'y', 'z'
+        ]
+        var qtd = 0
+        if (tamanho > 5) {
+            for (var i = 0; i < 26; i++) {
+                if (indentificador.includes(letras[i])) {
+                    qtd++
+                }
+            }
+            if (qtd > 0 || tamanho < 11) {
+                emailVar = indentificador
+                tellVar = 'NULL'
+            } else {
+                var tellFormatado = ''
+                for (var i = 1; i <= 11; i++) {
+                    if (i == 1 && indentificador[i - 1] != '(') {
+                        tellFormatado += '('
+                    } else if (i == 3 && indentificador[i - 1] != ')') {
+                        tellFormatado += ')'
+                        tellFormatado += ' '
+                    } else if (i == 8 && indentificador[i - 1] != '-') {
+                        tellFormatado += '-'
+                    }
+                    tellFormatado += indentificador[i - 1]
+                }
+                tellVar = tellFormatado.replace('(', '').replace(')', '').replace(' ', '').replace('-', '')
+                emailVar = 'NULL'
+                ipt_indentificador.value = tellFormatado
+                ipt_indentificador.maxLength = 15
+
+            }
+        } else {
+            emailVar = 'NULL'
+            tellVar = 'NULL'
+        }
+    }
+
+    function exibirErros(erro) {
+        var msgErros = [
+            `Preencha o campo: Email ou Telefone`,
+            `Email deve incluir "@" e "."`,
+            `Preencha o campo: Nome`,
+            `Preencha o campo: Nome de Usuario`,
+            `Preencha o campo: Data de Nascimento `,
+            `Preencha o campo: Senha`,
+            `Senha deve ter mais que 6 caracteres`,
+        ]
+        pop_up_erro.style.display = 'flex'
+        msg_erro.innerHTML = msgErros[erro]
+        setTimeout(() => {
+            pop_up_erro.style.display = 'none'
+        }, 1000)
+    }
+    function exibirSucesso() {
+        pop_up_erro.style.display = 'flex'
+        msg_erro.innerHTML = `Cadastro realizado com sucesso`
+        setTimeout(() => {
+            pop_up_erro.style.display = 'none'
+        }, 3000)
+    }
+
+
+
+</script>
 
 </html>
