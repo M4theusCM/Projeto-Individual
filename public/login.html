@@ -99,15 +99,17 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.ID_USUARIO = json.idUsuario;
                     sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.CPF_USUARIO = json.cpf;
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.TELL_USUARIO = json.tell;
+                    sessionStorage.NICKNAME_USUARIO = json.nickName;
+                    sessionStorage.DESC_USUARIO = json.descricao;
+                    sessionStorage.IMG_USUARIO = json.imgPerfil;
 
                     setTimeout(function () {
                         window.location = "./gearUP/home.html";
-                    }, 1000); // apenas para exibir o loading
+                    }, 500); // apenas para exibir o loading
 
                 });
 

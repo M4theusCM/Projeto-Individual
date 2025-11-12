@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/gearup.css">
-    <title>GearUP - Home</title>
+    <title>GearUP - Perfil</title>
     <link rel="icon" href="../src/logo.png">
-    <script src="../js/sessao.js"></script>
+    <link rel="stylesheet" href="../styles/gearup.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
     </style>
 </head>
+
 <body>
     <div class="container-principal">
         <div class="menu-lateral">
@@ -23,7 +24,7 @@
             </div>
             <div class="area-links">
                 <div class="links">
-                    <a href="./home.html" class="selecionado ">
+                    <a href="./home.html">
                         <img src="" alt="Home">
                         Pagina inicail
                     </a>
@@ -48,31 +49,65 @@
                 </div>
                 <div class="links">
                     <a href="./carros.html">
-                        <img src="" alt="Carros"> 
+                        <img src="" alt="Carros">
                         Carros
                     </a>
                 </div>
             </div>
             <div class="area-sair">
-                 <div class="links">
-                    <a href="./perfil.html">
+                <div class="links">
+                    <a href="./perfil.html" class="selecionado">
                         <img src="" alt="Perfil">
-                        Perfil  
+                        Perfil
                     </a>
                 </div>
                 <div class="links">
-                    <button onclick="limparSessao()">
+                    <button>
                         <img src="" alt="Sair">
                         Sair
                     </button>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="card">
-                a
+        <div class="container-perfil" id="perfil_geral">
+            <div class="banner">
+                <div class="aba">
+                    <span>Geral</span>
+                </div>
+                <div class="aba">
+                    <span>Estatisticas</span>
+                </div>
+            </div>
+            <div class="perfil">
+                <div class="img-perfil">
+                    <img src="" alt="Img">
+                </div>
+                <div class="infos-perfil">
+                    <div>
+                        <h1>Nome Perfil</h1>
+                        <h3>Nome do usuario</h3>
+                    </div>
+                    <div>
+                        <p>Descrição:</p>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis est magnam facilis
+                            eligendi molestias eius fugit commodi expedita vitae quidem esse, ullam, quasi id atque
+                            error voluptate beatae at natus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="container-postagens">
+                <div class="legendas">
+                    <h2>Postagens:</h2>
+                    <div class="add">
+                        +
+                    </div>
+                </div>
+                <div class="area-postagens">
+                </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

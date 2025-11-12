@@ -86,7 +86,7 @@
     var emailVar = 'NULL'
     var tellVar = 'NULL'
     var nickNameVar = ''
-    function cadastrar() {
+    async function cadastrar() {
         var nomeVar = ipt_nome.value
         nickNameVar = ipt_nickname.value
         var dtNascVar = ipt_data_nasc.value
@@ -108,17 +108,11 @@
         } else if (senhaVar.length <= 6) {
             exibirErros(6)
         } else { // cadastro
-            // Enviando o valor da nova input
 
-            if (buscarIndentificador()) {
-                if (comparacaoEmail == emailVar) {
-                    exibirErros(7)
-                } else if (comparacaoTell == tellVar) {
-                    exibirErros(8)
-                } else {
-                    exibirErros(9)
-                }
-            } else {
+
+            // Enviando o valor da nova input
+            var existe = await buscarIndentificador()
+            if (existe == false) {
                 fetch("/usuarios/cadastrar", {
                     method: "POST",
                     headers: {
@@ -210,7 +204,7 @@
     }
 
     function buscarIndentificador() {
-        fetch("/usuarios/validarIdentificador", {
+        return fetch("/usuarios/validarIdentificador", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -234,26 +228,35 @@
                     comparacaoTell = json.tell
                     comparacaoNick = json.nickName
 
-                    if (
-                        comparacaoEmail == emailVar ||
-                        comparacaoTell == tellVar ||
-                        comparacaoNick == nickNameVar
-                    ) {
-                        return true
-                    } else {
-                        return false
+                    console.log('Aqui foi')
+                    if (comparacaoEmail == emailVar) {
+                        exibirErros(7)
+                    } else if (comparacaoTell == tellVar) {
+                        exibirErros(8)
+                    } else if (comparacaoNick == nickNameVar) {
+                        exibirErros(9)
                     }
 
                 });
 
                 console.log('Existe')
-                return true
+
+                if (comparacaoEmail != 'vazio' ||
+                    comparacaoNick != 'vazio' ||
+                    comparacaoTell != 'vazio'
+                ) {
+                    return false
+                }
+                else {
+                    return true
+                }
             } else {
                 console.log("Houve um erro ao realizar a busca!");
                 resposta.text().then(texto => {
                     console.error(texto);
                     finalizarAguardar(texto);
                 });
+                return false
             }
 
         }).catch(function (erro) {
