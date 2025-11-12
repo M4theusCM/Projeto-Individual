@@ -1,17 +1,17 @@
 var usuarioModel = require("../models/usuarioModel");
 var aquarioModel = require("../models/aquarioModel");
 
+
 function autenticar(req, res) {
-    var email = req.body.emailServer;
+    var identificador = req.body.indentificadorServer;
     var senha = req.body.senhaServer;
 
-    if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
+    if (identificador == undefined) {
+        res.status(400).send("Seu identificador está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está indefinida!");
     } else {
-
-        usuarioModel.autenticar(email, senha)
+        usuarioModel.autenticar(identificador, senha)
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
@@ -19,22 +19,13 @@ function autenticar(req, res) {
 
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
-
-                        aquarioModel.buscarAquariosPorEmpresa(resultadoAutenticar[0].empresaId)
-                            .then((resultadoAquarios) => {
-                                if (resultadoAquarios.length > 0) {
-                                    res.json({
-                                        id: resultadoAutenticar[0].id,
-                                        email: resultadoAutenticar[0].email,
-                                        nome: resultadoAutenticar[0].nome,
-                                        senha: resultadoAutenticar[0].senha,
-                                        cpf: resultadoAutenticar[0].cpf,
-                                        aquarios: resultadoAquarios
-                                    });
-                                } else {
-                                    res.status(204).json({ aquarios: [] });
-                                }
-                            })
+                        res.json({
+                            id: resultadoAutenticar[0].id,
+                            email: resultadoAutenticar[0].email,
+                            nome: resultadoAutenticar[0].nome,
+                            senha: resultadoAutenticar[0].senha,
+                            cpf: resultadoAutenticar[0].cpf,
+                        });
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
@@ -88,14 +79,54 @@ function cadastrar(req, res) {
                         erro.sqlMessage
                     );
                     res.status(500).
-                    
-                    json(erro.sqlMessage);
+
+                        json(erro.sqlMessage);
                 }
             );
     }
 }
 
+function validarIdentificador(req, res) {
+    var email = req.body.emailServer;
+    var nick = req.body.nickServer;
+    var tell = req.body.tellServer;
+
+    if (email == undefined && tell == undefined) {
+        res.status(400).send("Seu identificador está undefined!");
+    } else if (nick == undefined) {
+        res.status(400).send("Seu CPF está undefined!");
+    } else {
+        usuarioModel.validarIndentificador(email, tell, nick)
+            .then(
+                function (resultadoValidar) {
+                    console.log(`\nResultados encontrados: ${resultadoValidar.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultadoValidar)}`); // transforma JSON em String
+
+                    if (resultadoValidar.length >= 1) {
+                        console.log(resultadoValidar);
+
+                        res.json({
+                            email: resultadoValidar[0].email,
+                            tell: resultadoValidar[0].tell,
+                            nickName: resultadoValidar[0].nickName,
+                        });
+                    } else if (resultadoValidar.length == 0) {
+                        res.json({
+                            email: 'vazio',
+                            tell: 'vazio',
+                            nickName: 'vazio',
+                        });
+                    } else {
+                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
+                    }
+
+                }
+            )
+    }
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    validarIdentificador
 }

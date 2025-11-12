@@ -1,9 +1,10 @@
 var database = require("../database/config")
 
-function autenticar(email, senha) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, senha)
+function autenticar(identificador, senha) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", identificador, senha)
     var instrucaoSql = `
-        SELECT id, nome, email, cpf, fk_empresa as empresaId FROM usuario WHERE email = '${email}' AND senha = '${senha}';
+        SELECT idUsuario, nome, email, tell, nickName, dtNasc, statusUser, descricao, imgPerfil FROM usuario
+            WHERE (email = "${identificador}" OR tell = "${identificador}" OR nickName = "${identificador}") AND senha = "${senha}";
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -15,14 +16,34 @@ function cadastrar(nome, email, tell, nick, dtNasc, senha) {
     
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
-    var instrucaoSql = `
-        INSERT INTO usuario (nome, email, tell, nickName, dtNasc, senha) VALUES ('${nome}', '${email}', ${tell},'${nick}', '${dtNasc}', '${senha}');
-    `;
+    if(email != 'NULL'){
+        var instrucaoSql = `
+            INSERT INTO usuario (nome, email, tell, nickName, dtNasc, senha) VALUES ('${nome}', '${email}', ${tell},'${nick}', '${dtNasc}', '${senha}');
+        `;
+    }else{
+        var instrucaoSql = `
+            INSERT INTO usuario (nome, email, tell, nickName, dtNasc, senha) VALUES ('${nome}', ${email}, '${tell}','${nick}', '${dtNasc}', '${senha}');
+        `;
+    }
+
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
+// valida se já possui esses dados
+function validarIndentificador(email, tell, nickName){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, tell, nickName)
+    var instrucaoSql = `
+        SELECT email, tell, nickName FROM usuario WHERE email = '${email}' OR tell = '${tell}' OR nickName = '${nickName}';
+    `
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    validarIndentificador
 };
