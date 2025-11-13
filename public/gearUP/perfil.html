@@ -7,6 +7,7 @@
     <title>GearUP - Perfil</title>
     <link rel="icon" href="../src/logo.png">
     <link rel="stylesheet" href="../styles/gearup.css">
+    <script src="../js/sessao.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -25,7 +26,7 @@
             <div class="area-links">
                 <div class="links">
                     <a href="./home.html">
-                        <img src="" alt="Home">
+                        <img alt="Home" id="img-usuario-perfil">
                         Pagina inicail
                     </a>
                 </div>
@@ -79,17 +80,17 @@
                 </div>
             </div>
             <div class="perfil">
-                <div class="img-perfil">
-                    <img src="" alt="Img">
+                <div class="img-perfil" id="img_usuario_perfil">
                 </div>
                 <div class="infos-perfil">
                     <div>
-                        <h1>Nome Perfil</h1>
-                        <h3>Nome do usuario</h3>
+                        <h1 id="nickName_perfil"></h1>
+                        <h3 id="nome_perfil">Nome do usuario</h3>
                     </div>
                     <div>
                         <p>Descrição:</p>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis est magnam facilis
+                        <p id="desc_perfil">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis est
+                            magnam facilis
                             eligendi molestias eius fugit commodi expedita vitae quidem esse, ullam, quasi id atque
                             error voluptate beatae at natus.
                         </p>
@@ -109,5 +110,15 @@
         </div>
     </div>
 </body>
+<script>
+    nickName_perfil.innerHTML = sessionStorage.NICKNAME_USUARIO;
+    nome_perfil.innerHTML = sessionStorage.NOME_USUARIO;
+    desc_perfil.innerHTML = sessionStorage.DESC_USUARIO;
+    img_perfil = sessionStorage.IMG_USUARIO;
+
+    img_usuario_perfil.innerHTML = `
+        <img src="../src/perfils/${img_perfil}" alt="Img" class="img-usuario-perfil">
+    `
+</script>
 
 </html>

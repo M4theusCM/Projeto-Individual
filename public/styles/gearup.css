@@ -204,6 +204,12 @@ body {
     justify-content: center;
     padding: 1% 1%;
 }
+.container-perfil .img-perfil .img-usuario-perfil{
+    width: 300px;
+    height: 300px;
+    border-radius: 100%;
+    background-color: var(--cinza-claro-2);
+}
 
 .container-perfil .infos-perfil {
     width: 55%;

@@ -92,6 +92,46 @@
         var dtNascVar = ipt_data_nasc.value
         var senhaVar = ipt_password.value
 
+        var imgVetor = [
+            `perfil-1.png`,
+            `perfil-2.png`,
+            `perfil-3.png`,
+            `perfil-4.png`,
+            `perfil-5.png`,
+            `perfil-6.png`,
+        ]
+
+        var descVetor = [
+            "Apaixonado por motores e velocidade 🔥",
+            "Carros não são só máquinas — são estilo de vida 🏎️",
+            "Entre rodas e histórias, nascemos acelerando 🚘",
+            "Conectando pilotos, fãs e máquinas em um só lugar ⚙️",
+            "A rede onde o ronco do motor fala mais alto 🏁",
+            "De clássicos a superesportivos — aqui todos têm espaço 🚗",
+            "Mais que uma garagem virtual, uma comunidade automotiva 🔧",
+            "Combustível: paixão. Direção: liberdade 🛣️",
+            "Curtindo o som do V8 e a vibe da estrada 🚀",
+            "Acelere conexões, compartilhe emoções 🏎️",
+            "Da oficina ao asfalto — todo mundo tem uma história pra contar 🔩",
+            "Onde o amor por carros encontra tecnologia 💡",
+            "Velocidade é arte — e aqui ela ganha palco 🎨",
+            "A rede social feita para quem vive no limite das RPMs 🔥",
+            "Conectando mentes que respiram gasolina (ou eletricidade ⚡)",
+            "Seu ponto de encontro com a cultura automotiva 🚗💬",
+            "Mostre sua máquina, compartilhe seu estilo 🛞",
+            "Amigos, carros e estrada — a trindade perfeita 😎",
+            "Do zero ao topo, juntos nessa corrida 🏁",
+            "A rede que move quem ama dirigir 💨"
+        ];
+
+
+        var imgAleatoria = parseInt(Math.random() * imgVetor.length)
+        var descAleatoria = parseInt(Math.random() * descVetor.length)
+
+        var imgVar = imgVetor[imgAleatoria]
+        var descVar = descVetor[descAleatoria]
+
+
         /*validações*/
         if ((emailVar == 'NULL' && tellVar == 'NULL') || ipt_indentificador.length == 0) {
             exibirErros(0)
@@ -127,6 +167,8 @@
                         nickServer: nickNameVar,
                         dtNascServer: dtNascVar,
                         senhaServer: senhaVar,
+                        imgServer: imgVar,
+                        descServer:descVar ,
                     }),
                 })
                     .then(function (resposta) {
