@@ -13,7 +13,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
     </style>
 </head>
-<body>
+<body onload="validarSessao()">
     <div class="container-principal">
         <div class="menu-lateral">
             <div class="logo">
@@ -24,31 +24,31 @@
             <div class="area-links">
                 <div class="links">
                     <a href="./home.html" class="selecionado ">
-                        <img src="" alt="Home">
+                        <img src="../src/icones/home-icon.png" class="menu-icons" alt="Home">
                         Pagina inicail
                     </a>
                 </div>
                 <div class="links">
                     <a href="./eventos.html">
-                        <img src="" alt="Calendario">
+                        <img src="../src/icones/evento-icon.png" class="menu-icons" alt="Calendario">
                         Eventos
                     </a>
                 </div>
                 <div class="links">
                     <a href="./jogos.html">
-                        <img src="" alt="controle">
+                        <img src="../src/icones/jogo-icon.png" class="menu-icons" alt="controle">
                         Jogos
                     </a>
                 </div>
                 <div class="links">
                     <a href="./filmes.html">
-                        <img src="" alt="Claclete">
+                        <img src="../src/icones/filme-icon.png" class="menu-icons" alt="Claclete">
                         Filmes
                     </a>
                 </div>
                 <div class="links">
                     <a href="./carros.html">
-                        <img src="" alt="Carros"> 
+                        <img src="../src/icones/carro-icon.png" class="menu-icons" alt="Carros"> 
                         Carros
                     </a>
                 </div>
@@ -56,13 +56,13 @@
             <div class="area-sair">
                  <div class="links">
                     <a href="./perfil.html">
-                        <img src="" alt="Perfil">
+                        <img src="" alt="Perfil" id="perfil_img_menu" class="menu-img">
                         Perfil  
                     </a>
                 </div>
                 <div class="links">
                     <button onclick="limparSessao()">
-                        <img src="" alt="Sair">
+                        <img src="../src/icones/sair-icon.png" alt="Sair" class="menu-img">
                         Sair
                     </button>
                 </div>

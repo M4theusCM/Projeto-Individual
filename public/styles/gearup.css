@@ -83,10 +83,10 @@ body {
     transition: .5s;
 }
 
-.menu-lateral .links img {
-    width: 50px;
-    width: 50px;
+.menu-lateral .links .menu-icons {
+    width: 35px;
     margin-right: 1vw;
+    margin-left: 1vw;
 }
 
 .menu-lateral .links a:hover {
@@ -101,6 +101,12 @@ body {
     background-color: var(--cinza-claro-2);
 }
 
+.menu-lateral .menu-img {
+    background-color: var(--cinza-claro-1);
+    border-radius: 100%;
+    width: 50px;
+    margin-right: 1vw;
+}
 
 .menu-lateral .area-sair {
     width: 100%;
@@ -162,7 +168,8 @@ body {
 .container-perfil .banner {
     width: 100%;
     height: 200px;
-    background-image: url();
+    background-image: url(../src/efeitos/banner-carro.png);
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-color: rgb(0, 68, 255);
@@ -204,9 +211,10 @@ body {
     justify-content: center;
     padding: 1% 1%;
 }
-.container-perfil .img-perfil .img-usuario-perfil{
-    width: 300px;
-    height: 300px;
+
+.container-perfil .img-perfil .img-usuario-perfil {
+    width: 225px;
+    height: 225px;
     border-radius: 100%;
     background-color: var(--cinza-claro-2);
 }
@@ -219,6 +227,18 @@ body {
     justify-content: space-evenly;
     padding: 5% 2%;
     color: white;
+}
+
+.container-perfil .infos-perfil h1 {
+    font-size: 35px;
+}
+
+.container-perfil .infos-perfil h3 {
+    font-size: 25px;
+}
+
+.container-perfil .infos-perfil p {
+    font-size: 20px;
 }
 
 .container-perfil .container-postagens {
@@ -235,7 +255,7 @@ body {
     margin-bottom: 5vh;
 }
 
-.container-perfil .legendas .add{
+.container-perfil .legendas .add {
     width: 30px;
     height: 30px;
     border-radius: 5px;
@@ -250,4 +270,43 @@ body {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+}
+
+#perfil_geral {
+    display: flex;
+    flex-direction: column;
+}
+
+.perfil-estatisticas {
+    display: none;
+    flex-direction: row;
+    width: 100%;
+    height: 500px;
+}
+
+.perfil-estatisticas .area-graficos {
+    background-color: pink;
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1% 2%;
+}
+
+.perfil-estatisticas .area-kpis {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.perfil-estatisticas .area-kpis .kpis{
+    width: 80%;
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+}
+
+.perfil-estatisticas .area-kpis{
+
 }

@@ -16,8 +16,11 @@ function validarSessao() {
     var id = sessionStorage.ID_USUARIO
 
 
-    if (email != null && nome != null) {
-        b_usuario.innerHTML = nome;
+    if ((email != null || tell != null)
+        && nome != null && nickName != null
+        && desc != null && img != null
+        && id != null) {
+        perfil_img_menu.src = `../src/perfils/${img}`
     } else {
         window.location = "../login.html";
     }
@@ -45,3 +48,14 @@ function finalizarAguardar(texto) {
     // }
 }
 
+
+function exibirPerfil() {
+    nickName_perfil.innerHTML = sessionStorage.NICKNAME_USUARIO;
+    nome_perfil.innerHTML = sessionStorage.NOME_USUARIO;
+    desc_perfil.innerHTML = sessionStorage.DESC_USUARIO;
+    img_perfil = sessionStorage.IMG_USUARIO;
+
+    img_usuario_perfil.innerHTML = `
+        <img src="../src/perfils/${img_perfil}" alt="Img" class="img-usuario-perfil">
+    `
+}

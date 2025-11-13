@@ -15,7 +15,7 @@
     </style>
 </head>
 
-<body>
+<body onload="validarSessao(), exibirPerfil()">
     <div class="container-principal">
         <div class="menu-lateral">
             <div class="logo">
@@ -25,100 +25,118 @@
             </div>
             <div class="area-links">
                 <div class="links">
-                    <a href="./home.html">
-                        <img alt="Home" id="img-usuario-perfil">
+                    <a href="./home.html" class="selecionado ">
+                        <img src="../src/icones/home-icon.png" class="menu-icons" alt="Home">
                         Pagina inicail
                     </a>
                 </div>
                 <div class="links">
                     <a href="./eventos.html">
-                        <img src="" alt="Calendario">
+                        <img src="../src/icones/evento-icon.png" class="menu-icons" alt="Calendario">
                         Eventos
                     </a>
                 </div>
                 <div class="links">
                     <a href="./jogos.html">
-                        <img src="" alt="controle">
+                        <img src="../src/icones/jogo-icon.png" class="menu-icons" alt="controle">
                         Jogos
                     </a>
                 </div>
                 <div class="links">
                     <a href="./filmes.html">
-                        <img src="" alt="Claclete">
+                        <img src="../src/icones/filme-icon.png" class="menu-icons" alt="Claclete">
                         Filmes
                     </a>
                 </div>
                 <div class="links">
                     <a href="./carros.html">
-                        <img src="" alt="Carros">
+                        <img src="../src/icones/carro-icon.png" class="menu-icons" alt="Carros">
                         Carros
                     </a>
                 </div>
             </div>
             <div class="area-sair">
                 <div class="links">
-                    <a href="./perfil.html" class="selecionado">
-                        <img src="" alt="Perfil">
+                    <a href="./perfil.html">
+                        <img src="../src/perfils/perfil-5.png" alt="Perfil" id="perfil_img_menu" class="menu-img">
                         Perfil
                     </a>
                 </div>
                 <div class="links">
-                    <button>
-                        <img src="" alt="Sair">
+                    <button onclick="limparSessao()">
+                        <img src="../src/icones/sair-icon.png" alt="Sair" class="menu-img">
                         Sair
                     </button>
                 </div>
             </div>
         </div>
-        <div class="container-perfil" id="perfil_geral">
+        <div class="container-perfil" >
             <div class="banner">
-                <div class="aba">
-                    <span>Geral</span>
+                <div class="aba" onclick="exibirGeral()">
+                    Geral
                 </div>
-                <div class="aba">
-                    <span>Estatisticas</span>
-                </div>
-            </div>
-            <div class="perfil">
-                <div class="img-perfil" id="img_usuario_perfil">
-                </div>
-                <div class="infos-perfil">
-                    <div>
-                        <h1 id="nickName_perfil"></h1>
-                        <h3 id="nome_perfil">Nome do usuario</h3>
-                    </div>
-                    <div>
-                        <p>Descrição:</p>
-                        <p id="desc_perfil">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis est
-                            magnam facilis
-                            eligendi molestias eius fugit commodi expedita vitae quidem esse, ullam, quasi id atque
-                            error voluptate beatae at natus.
-                        </p>
-                    </div>
+                <div class="aba" onclick="exibirEstatisticas()">
+                    Estatisticas
                 </div>
             </div>
-            <div class="container-postagens">
-                <div class="legendas">
-                    <h2>Postagens:</h2>
-                    <div class="add">
-                        +
+            <div id="perfil_geral">
+                <div class="perfil">
+                    <div class="img-perfil" id="img_usuario_perfil">
+                    </div>
+                    <div class="infos-perfil">
+                        <div>
+                            <h1 id="nickName_perfil"></h1>
+                            <h3 id="nome_perfil"></h3>
+                        </div>
+                        <div>
+                            <p>Descrição:</p>
+                            <p id="desc_perfil">
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="area-postagens">
+                <div class="container-postagens">
+                    <div class="legendas">
+                        <h2>Postagens:</h2>
+                        <div class="add">
+                            +
+                        </div>
+                    </div>
+                    <div class="area-postagens">
+                    </div>
+                </div>
+            </div>
+            <div class="perfil-estatisticas" id="perfil_estatisticas">
+                <div class="area-graficos">
+                    <div class="grafico-1"></div>
+                    <div class="grafico-2"></div>
+                    <div class="grafico-3"></div>
+                </div>
+                <div class="area-kpis">
+                    <div class="kpis">
+                        <div class="linha">
+                            <div class="h4"></div>
+                            <p class="valor"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+       
     </div>
 </body>
 <script>
-    nickName_perfil.innerHTML = sessionStorage.NICKNAME_USUARIO;
-    nome_perfil.innerHTML = sessionStorage.NOME_USUARIO;
-    desc_perfil.innerHTML = sessionStorage.DESC_USUARIO;
-    img_perfil = sessionStorage.IMG_USUARIO;
+    
+    function exibirGeral(){
+        perfil_geral.style.display = 'flex'
+        perfil_estatisticas.style.display = 'none'
+    }
 
-    img_usuario_perfil.innerHTML = `
-        <img src="../src/perfils/${img_perfil}" alt="Img" class="img-usuario-perfil">
-    `
+    function exibirEstatisticas() {
+        perfil_geral.style.display = 'none'
+        perfil_estatisticas.style.display = 'flex'
+    }
+
 </script>
 
 </html>

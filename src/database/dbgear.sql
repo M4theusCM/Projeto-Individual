@@ -14,3 +14,5 @@ CREATE TABLE usuario(
 	descricao VARCHAR(300),
     imgPerfil VARCHAR(255)
 );
+
+SELECT * FROM usuario;
