@@ -15,7 +15,7 @@
     </style>
 </head>
 
-<body onload="validarSessao(), exibirPerfil()">
+<body onload="validarSessao(), exibirPerfil()" style="display: flex;">
     <div class="container-principal">
         <div class="menu-lateral">
             <div class="logo">
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-perfil" >
+        <div class="container-perfil">
             <div class="banner">
                 <div class="aba" onclick="exibirGeral()">
                     Geral
@@ -98,7 +98,7 @@
                 <div class="container-postagens">
                     <div class="legendas">
                         <h2>Postagens:</h2>
-                        <div class="add">
+                        <div class="add" onclick="adicionarPostagem()">
                             +
                         </div>
                     </div>
@@ -115,19 +115,35 @@
                 <div class="area-kpis">
                     <div class="kpis">
                         <div class="linha">
-                            <div class="h4"></div>
-                            <p class="valor"></p>
+                            <div class="h4">indicador</div>
+                            <p class="valor">Valor</p>
+                        </div>
+                        <div class="tracos"></div>
+                        <div class="linha">
+                            <div class="h4">indicador</div>
+                            <p class="valor">Valor</p>
+                        </div>
+                        <div class="linha">
+                            <div class="h4">indicador</div>
+                            <p class="valor">Valor</p>
+                        </div>
+                        <div class="linha">
+                            <div class="h4">indicador</div>
+                            <p class="valor">Valor</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-       
+
+    </div>
+    <div class="modal-add-poster" id="add_poster">
+
     </div>
 </body>
 <script>
-    
-    function exibirGeral(){
+
+    function exibirGeral() {
         perfil_geral.style.display = 'flex'
         perfil_estatisticas.style.display = 'none'
     }
@@ -136,6 +152,10 @@
         perfil_geral.style.display = 'none'
         perfil_estatisticas.style.display = 'flex'
     }
+
+    function adicionarPostagem() {
+        add_poster.style.display = 'flex'
+    }   
 
 </script>
 
