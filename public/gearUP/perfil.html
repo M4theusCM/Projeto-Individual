@@ -8,6 +8,8 @@
     <link rel="icon" href="../src/logo.png">
     <link rel="stylesheet" href="../styles/gearup.css">
     <script src="../js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/poster.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -108,9 +110,15 @@
             </div>
             <div class="perfil-estatisticas" id="perfil_estatisticas">
                 <div class="area-graficos">
-                    <div class="grafico-1"></div>
-                    <div class="grafico-2"></div>
-                    <div class="grafico-3"></div>
+                    <div class="graficos grafico-1">
+                        <canvas id="grf_postagens"></canvas>
+                    </div>
+                    <div class="graficos grafico-2">
+                        <canvas id="grf_tipos"></canvas>
+                    </div>
+                    <div class="graficos grafico-3">
+                        <canvas id="grf_interacoes"></canvas>
+                    </div>
                 </div>
                 <div class="area-kpis">
                     <div class="kpis">
@@ -123,10 +131,12 @@
                             <div class="h4">indicador</div>
                             <p class="valor">Valor</p>
                         </div>
+                        <div class="tracos"></div>
                         <div class="linha">
                             <div class="h4">indicador</div>
                             <p class="valor">Valor</p>
                         </div>
+                        <div class="tracos"></div>
                         <div class="linha">
                             <div class="h4">indicador</div>
                             <p class="valor">Valor</p>
@@ -135,12 +145,138 @@
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
     <div class="modal-add-poster" id="add_poster">
+        <div class="fechar-modal">
+            <div onclick="fecharModal()">
+                <img src="../src/acessos/Arrow 1.png" alt="Sair">
+            </div>
+        </div>
+        <div class="container-modal">
+            <div class="infos-poster">
+                <h1>Nova Postagem:</h1>
+                <label class="linha-ipt">
+                    Escolha a categoria:
+                    <select id="select_categoria">
+                        <option value="carro" selected>Carros</option>
+                        <option value="evento">Eventos</option>
+                        <option value="filme">Filmes</option>
+                        <option value="jogo">Jogos</option>
+                    </select>
+                </label>
 
+                <label class="linha-ipt">
+                    Adicionar imagem:
+                    <input type="file" id="ipt_img" onchange="atualizarPreview(1)">
+                </label>
+
+                <label class="linha-ipt">
+                    Adicionar Legenda:
+                    <textarea id="txt_legenda" onkeyup="atualizarlegendaPreview()"></textarea>
+                </label>
+
+                <label class="linha-ipt">
+                    Escolha o formato:
+                    <select id="formato" onchange="formato()">
+                        <option value="0" selected>Poster</option>
+                        <option value="1">horizontal</option>
+                        <option value="2">Quadrado</option>
+                    </select>
+                </label>
+                <div class="enviar">
+                    <button onclick="postar()">Postar</button>
+                </div>
+            </div>
+            <div class="preview">
+                <div class="card-preview card-preview" id="preview_formato_poster">
+                    <div class="img">
+                        <img src="../src/efeitos/gearup - efeito-claro.png" alt="img" id="preview_poster">
+                    </div>
+                    <div class="infos">
+                        <div class="perfil">
+                            <img src="" alt="" id="img_perfil_add_poster">
+                            <p id="nickName_user_add_poster"></p>
+                        </div>
+                        <div class="desc">
+                            <p id="desc_add_poter"></p>
+                        </div>
+                        <div class="estat"></div>
+                        <div class="comen">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
+<!-- Graficos -->
+<script>
+    const grf1 = document.getElementById('grf_postagens');
+    new Chart(grf1, {
+        type: 'line',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const grf2 = document.getElementById('grf_tipos');
+    new Chart(grf2, {
+        type: 'pie',
+        data: {
+            labels: ['Eventos', 'Filmes', 'Jogos', 'Carros'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const grf3 = document.getElementById('grf_interacoes');
+    new Chart(grf3, {
+        type: 'bar',
+        data: {
+            labels: ['Comentarios', 'Curtidas'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+</script>
+
+<!-- Funções -->
 <script>
 
     function exibirGeral() {
@@ -152,10 +288,6 @@
         perfil_geral.style.display = 'none'
         perfil_estatisticas.style.display = 'flex'
     }
-
-    function adicionarPostagem() {
-        add_poster.style.display = 'flex'
-    }   
 
 </script>
 
