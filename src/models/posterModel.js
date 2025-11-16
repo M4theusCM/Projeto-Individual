@@ -22,7 +22,11 @@ async function salvar(poster) {
 function posterUsuario(idCriador) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", idCriador)
     var instrucaoSql = `
-           SELECT * FROM poster WHERE fkCriador = ${idCriador} order by dtHora DESC;
+            SELECT idPoster, poster, COUNT(fkPoster) AS curtidas
+	        FROM poster p LEFT JOIN curtida c ON p.idPoster = c.fkPoster
+	        WHERE p.fkCriador = ${idCriador} 
+            GROUP BY idPoster
+            order by dtHora;
         `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

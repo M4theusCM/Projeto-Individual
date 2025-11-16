@@ -18,7 +18,7 @@
 </head>
 
 <body onload="validarSessao(), exibirPerfil(), buscarPosterUser()" style="display: flex;">
-    <div class="container-principal">
+    <div class="container-principal" id="container_principal">
         <div class="menu-lateral">
             <div class="logo">
                 <a href="./home.html">
@@ -27,9 +27,9 @@
             </div>
             <div class="area-links">
                 <div class="links">
-                    <a href="./home.html" class="selecionado ">
+                    <a href="./home.html">
                         <img src="../src/icones/home-icon.png" class="menu-icons" alt="Home">
-                        Pagina inicail
+                        Pagina inicial
                     </a>
                 </div>
                 <div class="links">
@@ -58,8 +58,8 @@
                 </div>
             </div>
             <div class="area-sair">
-                <div class="links">
-                    <a href="./perfil.html">
+                <div class="links" >
+                    <a href="./perfil.html" class="selecionado">
                         <img src="../src/perfils/perfil-5.png" alt="Perfil" id="perfil_img_menu" class="menu-img">
                         Perfil
                     </a>
@@ -104,19 +104,23 @@
                             +
                         </div>
                     </div>
-                    <div class="area-postagens">
+                    <div class="area-postagens" id="area_postagens_user">
+                        
                     </div>
                 </div>
             </div>
             <div class="perfil-estatisticas" id="perfil_estatisticas">
                 <div class="area-graficos">
                     <div class="graficos grafico-1">
+                        <p>Postagens nos ultimos 7 dias</p>
                         <canvas id="grf_postagens"></canvas>
                     </div>
                     <div class="graficos grafico-2">
+                        <p>Tipo de postagens</p>
                         <canvas id="grf_tipos"></canvas>
                     </div>
                     <div class="graficos grafico-3">
+                        <p>Interações</p>
                         <canvas id="grf_interacoes"></canvas>
                     </div>
                 </div>
@@ -220,15 +224,25 @@
         data: {
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
-                label: '# of Votes',
+                label: 'Postagens',
                 data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
+                borderWidth: 3,
+                borderColor: '#006aff',
+                backgroundColor: '#006aff',
             }]
         },
         options: {
             scales: {
+                x: {
+                    ticks: {
+                        color: '#FFF'
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#FFF'
+                    }
                 }
             }
         }
@@ -242,7 +256,7 @@
             datasets: [{
                 label: '# of Votes',
                 data: [12, 19, 3, 5],
-                borderWidth: 1
+                borderWidth: 1,
             }]
         },
         options: {
@@ -250,7 +264,9 @@
                 y: {
                     beginAtZero: true
                 }
-            }
+            },
+
+
         }
     });
 
@@ -258,11 +274,19 @@
     new Chart(grf3, {
         type: 'bar',
         data: {
-            labels: ['Comentarios', 'Curtidas'],
+            labels: ['Curtidas','Comentarios'],
             datasets: [{
-                label: '# of Votes',
+                label: 'Interações',
                 data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
+                borderWidth: 1,
+                backgroundColor: [
+                    "rgba(212, 14, 14, 0.281)",
+                    "rgba(14, 77, 212, 0.281)"
+                ],
+                borderColor: [
+                    "rgb(212, 14, 14)",
+                    "rgb(14, 77, 212)"
+                ]
             }]
         },
         options: {
@@ -288,6 +312,8 @@
         perfil_geral.style.display = 'none'
         perfil_estatisticas.style.display = 'flex'
     }
+
+    
 
 </script>
 

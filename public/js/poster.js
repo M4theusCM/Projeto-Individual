@@ -5,7 +5,9 @@ function adicionarPostagem() {
     img_perfil_add_poster.src = `
         ../src/perfils/${img_perfil}
     `
+
 }
+
 function fecharModal() {
     add_poster.style.display = 'none    '
 }
@@ -74,7 +76,8 @@ function postar() {
         body: formData
     })
         .then(res => {
-            window.location = "./perfil.html"
+            fecharModal()
+            buscarPosterUser()
         })
         .catch(err => {
             console.log(err);
@@ -86,8 +89,9 @@ function buscarPosterUser() {
     fetch(`/poster/posterUser/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                 resposta.reverse();
+                posterUsuario(resposta)
             });
         } else {
             console.error('Nenhum dado encontrado ou erro na API');
@@ -96,4 +100,25 @@ function buscarPosterUser() {
         .catch(function (error) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
         });
+}
+
+function posterUsuario(resposta) {
+    var todosPosters = resposta
+    var qtdPoster = todosPosters.length
+    console.log(qtdPoster)
+    var msg = ``
+    for (var i = 0; i < qtdPoster; i++) {
+        var posterAtual = todosPosters[i]
+        var imagem = posterAtual.poster
+        var qtdCurtidas = posterAtual.curtidas
+        msg += `
+        <div class="card-postagem">
+            <img src="../src/posters/${imagem}" alt="">
+            <div class="infos-postagem">
+                Curtidas: ${qtdCurtidas}
+            </div>
+        </div>
+    `
+    }
+    area_postagens_user.innerHTML = msg
 }
