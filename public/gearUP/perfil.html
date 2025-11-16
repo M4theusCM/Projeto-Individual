@@ -17,7 +17,7 @@
     </style>
 </head>
 
-<body onload="validarSessao(), exibirPerfil()" style="display: flex;">
+<body onload="validarSessao(), exibirPerfil(), buscarPosterUser()" style="display: flex;">
     <div class="container-principal">
         <div class="menu-lateral">
             <div class="logo">
@@ -174,12 +174,12 @@
 
                 <label class="linha-ipt">
                     Adicionar Legenda:
-                    <textarea id="txt_legenda" onkeyup="atualizarlegendaPreview()"></textarea>
+                    <textarea id="txt_legenda" maxlength="300" onkeyup="atualizarlegendaPreview()"></textarea>
                 </label>
 
                 <label class="linha-ipt">
                     Escolha o formato:
-                    <select id="formato" onchange="formato()">
+                    <select id="select_formato" onchange="formato()">
                         <option value="0" selected>Poster</option>
                         <option value="1">horizontal</option>
                         <option value="2">Quadrado</option>

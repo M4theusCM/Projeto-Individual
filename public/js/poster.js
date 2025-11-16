@@ -11,7 +11,7 @@ function fecharModal() {
 }
 
 
-function atualizarlegendaPreview(){
+function atualizarlegendaPreview() {
     var legenda = txt_legenda.value
     desc_add_poter.innerHTML = `${legenda}`
 }
@@ -38,7 +38,6 @@ function formato() {
         `preview_formato_quadrado`,
         `preview_formato_horizontal`
     ]
-    console.log('a')
     for (var i = 0; i < formato.length; i++) {
         if (i == tipo) {
             formatos[i].style.display = `flex`
@@ -46,4 +45,55 @@ function formato() {
             formatos[i].style.display = `none`
         }
     }
+}
+
+function postar() {
+    var idCriador = sessionStorage.ID_USUARIO
+    var foto = ipt_img
+    var legenda = txt_legenda.value
+    var formato = select_formato.value
+    var categoria = select_categoria.value
+    var msg = `
+        Dados do poster: \n
+        ID Criador: ${idCriador} \n
+        foto Valor: ${foto.files[0]} \n
+        legenda: ${legenda} \n
+        formato: ${formato} \n
+        categoria: ${categoria} \n
+        foto Nome: ${foto.value} \n
+    `
+    const formData = new FormData();
+    formData.append('fkCriador', idCriador)
+    formData.append('poster', foto.files[0])
+    formData.append('legenda', legenda)
+    formData.append('formato', formato)
+    formData.append('tipo', categoria)
+
+    fetch("/poster/cadastro", {
+        method: "POST",
+        body: formData
+    })
+        .then(res => {
+            window.location = "./perfil.html"
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
+
+function buscarPosterUser() {
+    var fkCriador = sessionStorage.ID_USUARIO
+    fetch(`/poster/posterUser/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
 }
