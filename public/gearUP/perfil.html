@@ -231,9 +231,9 @@
     function exibirEstatisticas() {
         perfil_geral.style.display = 'none'
         perfil_estatisticas.style.display = 'flex'
-        var idUsuario = sessionStorage.ID_USUARIO
-        var grafico = graficoQtdPoster(idUsuario)
-        console.log(grafico)
+        graficoQtdPoster()
+        grafiTipos()
+        graficosInteracoes()
     }
 
 </script>
@@ -241,6 +241,10 @@
 <!-- Dashboard -->
 <script>
     var qtdPoster = []
+    var qtdTipos = []
+    var qtdCurtida = []
+    var qtdComentario = []
+    var qtdPosterinteracao = []
     var parametrosGraf1 = []
     function graficoQtdPoster() {
         var fkCriador = sessionStorage.ID_USUARIO
@@ -254,7 +258,61 @@
                         vetorTemp.push(resposta[i].qtdPostagens)
                     }
                     qtdPoster = vetorTemp
-                    atualizarGraficos() 
+                    atualizarGraficos()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function grafiTipos() {
+        var fkCriador = sessionStorage.ID_USUARIO
+        fetch(`/poster/graficoTipo/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    var vetortemp = []
+                    vetortemp.push(resposta[0].qtdFilmes)
+                    vetortemp.push(resposta[0].qtdJogo)
+                    vetortemp.push(resposta[0].qtdEvento)
+                    vetortemp.push(resposta[0].qtdCarro)
+                    qtdTipos = vetortemp
+
+                    atualizarGraf2()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function graficosInteracoes() {
+        var fkCriador = sessionStorage.ID_USUARIO
+        fetch(`/poster/graficoInteracoes/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    var vetorTempCurtida = []
+                    var vetorTempComentario = []
+                    var vetorTempPostagens = []
+                    var tamanho = resposta.length
+                    for(var i = 0; i < tamanho; i++){
+                        var atual = resposta[i]
+                        vetorTempCurtida.push(atual.qtdCurtidas)
+                        vetorTempComentario.push(atual.qtdComentarios)
+                        vetorTempPostagens.push(atual.idPoster)
+                    }
+                    qtdComentario = vetorTempComentario
+                    qtdCurtida = vetorTempCurtida
+                    qtdPosterinteracao = vetorTempPostagens
+                    atualizarGraf3()
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -267,7 +325,6 @@
 
 
     function atualizarGraficos() {
-
         const grf1 = document.getElementById('grf_postagens');
         new Chart(grf1, {
             type: 'line',
@@ -297,59 +354,64 @@
                     }
                 }
             }
-        }); 
+        });
+    }
+    function atualizarGraf2() {
+        const grf2 = document.getElementById('grf_tipos');
+        new Chart(grf2, {
+            type: 'pie',
+            data: {
+                labels: ['Filmes', 'Jogos', 'Eventos', 'qtdCarro'],
+                datasets: [{
+                    label: '# Postes',
+                    data: qtdTipos,
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+
+
+            }
+        });
     }
 
-    const grf2 = document.getElementById('grf_tipos');
-    new Chart(grf2, {
-        type: 'pie',
-        data: {
-            labels: ['Eventos', 'Filmes', 'Jogos', 'Carros'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5],
-                borderWidth: 1,
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+    function atualizarGraf3() {
+
+        const grf3 = document.getElementById('grf_interacoes');
+        new Chart(grf3, {
+            type: 'bar',
+            data: {
+                labels: qtdPosterinteracao,
+                datasets: [{
+                    label: 'Interações de Curtidas',
+                    data: qtdCurtida,
+                    borderWidth: 1,
+                    backgroundColor: "rgba(212, 14, 14, 0.281)",
+                    borderColor: "rgb(212, 14, 14)"
+                },
+                {
+                    label: 'Interações de Comentario',
+                    data: qtdComentario,
+                    borderWidth: 1,
+                    backgroundColor: "rgba(14, 77, 212, 0.281)",
+                    borderColor: "rgb(14, 77, 212)"
+                }]
             },
-
-
-        }
-    });
-
-    const grf3 = document.getElementById('grf_interacoes');
-    new Chart(grf3, {
-        type: 'bar',
-        data: {
-            labels: ['Curtidas', 'Comentarios'],
-            datasets: [{
-                label: 'Interações',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1,
-                backgroundColor: [
-                    "rgba(212, 14, 14, 0.281)",
-                    "rgba(14, 77, 212, 0.281)"
-                ],
-                borderColor: [
-                    "rgb(212, 14, 14)",
-                    "rgb(14, 77, 212)"
-                ]
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
 
+    }
 
 
 </script>

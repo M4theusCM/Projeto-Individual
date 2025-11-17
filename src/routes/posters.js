@@ -19,5 +19,13 @@ router.get("/graficoQtdPoster/:fkCriador", function(req, res){
     posterController.graficoQtdPoster(req, res);
 });
 
+router.get("/graficoTipo/:fkCriador", function(req, res){
+    posterController.graficoTipo(req, res)
+})
+
+router.get("/graficoInteracoes/:fkCriador", function(req, res){
+    posterController.graficoInteracoes(req, res)
+})
+
 
 module.exports = router
