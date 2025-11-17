@@ -408,7 +408,9 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.84);
     display: none;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    z-index: 300;
     backdrop-filter: blur(5px);
     flex-direction: column;
     

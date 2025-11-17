@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="area-sair">
-                <div class="links" >
+                <div class="links">
                     <a href="./perfil.html" class="selecionado">
                         <img src="../src/perfils/perfil-5.png" alt="Perfil" id="perfil_img_menu" class="menu-img">
                         Perfil
@@ -105,7 +105,7 @@
                         </div>
                     </div>
                     <div class="area-postagens" id="area_postagens_user">
-                        
+
                     </div>
                 </div>
             </div>
@@ -218,35 +218,87 @@
 </body>
 <!-- Graficos -->
 <script>
-    const grf1 = document.getElementById('grf_postagens');
-    new Chart(grf1, {
-        type: 'line',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: 'Postagens',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 3,
-                borderColor: '#006aff',
-                backgroundColor: '#006aff',
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    ticks: {
-                        color: '#FFF'
+
+</script>
+
+<!-- Funções -->
+<script>
+    function exibirGeral() {
+        perfil_geral.style.display = 'flex'
+        perfil_estatisticas.style.display = 'none'
+    }
+
+    function exibirEstatisticas() {
+        perfil_geral.style.display = 'none'
+        perfil_estatisticas.style.display = 'flex'
+        var idUsuario = sessionStorage.ID_USUARIO
+        var grafico = graficoQtdPoster(idUsuario)
+        console.log(grafico)
+    }
+
+</script>
+
+<!-- Dashboard -->
+<script>
+    var qtdPoster = []
+    var parametrosGraf1 = []
+    function graficoQtdPoster() {
+        var fkCriador = sessionStorage.ID_USUARIO
+        fetch(`/poster/graficoQtdPoster/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    var tamanho = resposta.length
+                    var vetorTemp = []
+                    for (var i = 0; i < tamanho; i++) {
+                        vetorTemp.push(resposta[i].qtdPostagens)
                     }
-                },
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        color: '#FFF'
+                    qtdPoster = vetorTemp
+                    atualizarGraficos() 
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+
+    function atualizarGraficos() {
+
+        const grf1 = document.getElementById('grf_postagens');
+        new Chart(grf1, {
+            type: 'line',
+            data: {
+                // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: ['Dia 1', 'Dia 2', 'Dia 3', 'Dia 4', 'Dia 5', 'Dia 6'],
+                datasets: [{
+                    label: 'Postagens',
+                    data: qtdPoster,
+                    borderWidth: 3,
+                    borderColor: '#006aff',
+                    backgroundColor: '#006aff',
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#FFF'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#FFF'
+                        }
                     }
                 }
             }
-        }
-    });
+        }); 
+    }
 
     const grf2 = document.getElementById('grf_tipos');
     new Chart(grf2, {
@@ -274,7 +326,7 @@
     new Chart(grf3, {
         type: 'bar',
         data: {
-            labels: ['Curtidas','Comentarios'],
+            labels: ['Curtidas', 'Comentarios'],
             datasets: [{
                 label: 'Interações',
                 data: [12, 19, 3, 5, 2, 3],
@@ -298,22 +350,7 @@
         }
     });
 
-</script>
 
-<!-- Funções -->
-<script>
-
-    function exibirGeral() {
-        perfil_geral.style.display = 'flex'
-        perfil_estatisticas.style.display = 'none'
-    }
-
-    function exibirEstatisticas() {
-        perfil_geral.style.display = 'none'
-        perfil_estatisticas.style.display = 'flex'
-    }
-
-    
 
 </script>
 

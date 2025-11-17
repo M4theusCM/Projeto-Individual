@@ -90,5 +90,24 @@ SELECT * FROM curtida;
 SELECT * FROM comentario;
 SELECT * FROM acesso;
 
-SELECT * FROM poster
-order by  dtHora;
+SELECT	tipo, 
+	COUNT(tipo) AS quantidade FROM poster
+	WHERE fkCriador = 1
+    GROUP BY tipo;
+
+SELECT idPoster, poster, COUNT(fkPoster) 
+	FROM poster p LEFT JOIN curtida c ON p.idPoster = c.fkPoster
+	WHERE p.fkCriador = 1 
+    GROUP BY idPoster
+    order by dtHora DESC;
+    
+SELECT idPoster, COUNT(idPoster), dtHora from poster
+	WHERE dtHora >= date_sub(now(), interval 7 day) AND dtHora <= current_timestamp()
+    GROUP BY dtHora;
+    
+    
+SELECT idPoster, COUNT(l.fkPoster), COUNT(c.idComentario) FROM poster p
+	LEFT JOIN curtida l ON p.idPoster = l.fkPoster
+    LEFT JOIN comentario c ON p.idPoster = c.fkPoster
+    GROUP BY idPoster;
+    

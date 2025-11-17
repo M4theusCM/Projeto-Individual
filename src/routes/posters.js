@@ -11,11 +11,13 @@ router.get("/posterUser/:fkCriador", function(req, res){
 
 // upload.single('foto') vai buscar no json alguma propriedade chamada foto 
 router.post('/cadastro', upload.single('poster'), (req, res) => {
-    console.log('Passou no routers')
     posterController.salvar(req, res);
 });
 
 
+router.get("/graficoQtdPoster/:fkCriador", function(req, res){
+    posterController.graficoQtdPoster(req, res);
+});
 
 
 module.exports = router

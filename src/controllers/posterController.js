@@ -18,7 +18,7 @@ function salvar(req, res) {
 
 function posterUsuario(req, res) {
   var fkCriador = req.params.fkCriador;
-  posterModel.posterUsuario(fkCriador).then(function(resultado){
+  posterModel.posterUsuario(fkCriador).then(function (resultado) {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {
@@ -31,8 +31,23 @@ function posterUsuario(req, res) {
   });
 }
 
+function graficoQtdPoster(req, res) {
+  var fkCriador = req.params.fkCriador;
+  posterModel.graficoQtdPoster(fkCriador).then(function (resultado) {
+    if (resultado.length > 0) {
+      res.status(200).json(resultado);
+    } else {
+      res.status(204).send("Nenhum resultado encontrado!")
+    }
+  }).catch(function (erro) {
+    console.log(erro);
+    console.log("Houve um erro ao buscar a quantidade de postagens.", erro.sqlMessage);
+    res.status(500).json(erro.sqlMessage);
+  });
+}
 
 module.exports = {
   salvar,
-  posterUsuario
+  posterUsuario,
+  graficoQtdPoster
 }
