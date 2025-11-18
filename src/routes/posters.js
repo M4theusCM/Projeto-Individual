@@ -27,5 +27,9 @@ router.get("/graficoInteracoes/:fkCriador", function(req, res){
     posterController.graficoInteracoes(req, res)
 })
 
+router.get('/kpis/:fkCriador', function(req, res){
+    posterController.buscarkpis(req,res)
+})
+
 
 module.exports = router

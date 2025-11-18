@@ -127,23 +127,23 @@
                 <div class="area-kpis">
                     <div class="kpis">
                         <div class="linha">
-                            <div class="h4">indicador</div>
-                            <p class="valor">Valor</p>
+                            <div class="h4">Total de Publicações</div>
+                            <p class="valor" id="total_publi">Valor</p>
                         </div>
                         <div class="tracos"></div>
                         <div class="linha">
-                            <div class="h4">indicador</div>
-                            <p class="valor">Valor</p>
+                            <div class="h4">Curtidas Recebidas</div>
+                            <p class="valor" id="curtidas_recebidas">Valor</p>
                         </div>
                         <div class="tracos"></div>
                         <div class="linha">
-                            <div class="h4">indicador</div>
-                            <p class="valor">Valor</p>
+                            <div class="h4">Comentarios Recebidos</div>
+                            <p class="valor" id="comentarios_recebidos">Valor</p>
                         </div>
                         <div class="tracos"></div>
                         <div class="linha">
-                            <div class="h4">indicador</div>
-                            <p class="valor">Valor</p>
+                            <div class="h4">Curtidas Enviadas</div>
+                            <p class="valor" id="curtidas_enviadas">Valor</p>
                         </div>
                     </div>
                 </div>
@@ -234,6 +234,7 @@
         graficoQtdPoster()
         grafiTipos()
         graficosInteracoes()
+        buscarkpis()
     }
 
 </script>
@@ -303,7 +304,7 @@
                     var vetorTempComentario = []
                     var vetorTempPostagens = []
                     var tamanho = resposta.length
-                    for(var i = 0; i < tamanho; i++){
+                    for (var i = 0; i < tamanho; i++) {
                         var atual = resposta[i]
                         vetorTempCurtida.push(atual.qtdCurtidas)
                         vetorTempComentario.push(atual.qtdComentarios)
@@ -313,6 +314,26 @@
                     qtdCurtida = vetorTempCurtida
                     qtdPosterinteracao = vetorTempPostagens
                     atualizarGraf3()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function buscarkpis() {
+        var fkCriador = sessionStorage.ID_USUARIO
+        fetch(`/poster/kpis/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    total_publi.innerHTML = resposta[0].totalPoster
+                    curtidas_recebidas.innerHTML = resposta[0].totalCurtidas
+                    comentarios_recebidos.innerHTML = resposta[0].totalComentarios
+                    curtidas_enviadas.innerHTML = resposta[0].curtidasEnviadas
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');

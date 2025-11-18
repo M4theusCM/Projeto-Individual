@@ -50,10 +50,10 @@ function graficoTipo(fkCriador) {
     console.log(fkCriador)
     var instrucaoSql = `
         SELECT fkCriador, 
-            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'filme' AND fkCriador = 1) AS qtdFilmes,
-            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'jogo' AND fkCriador = 1) AS qtdJogo,
-            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'evento' AND fkCriador = 1) AS qtdEvento,
-            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'carro' AND fkCriador = 1) AS qtdCarro
+            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'filme' AND fkCriador = ${fkCriador}) AS qtdFilmes,
+            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'jogo' AND fkCriador = ${fkCriador}) AS qtdJogo,
+            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'evento' AND fkCriador = ${fkCriador}) AS qtdEvento,
+            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'carro' AND fkCriador = ${fkCriador}) AS qtdCarro
             FROM poster
             WHERE fkCriador = ${fkCriador}
             GROUP BY fkCriador;
@@ -79,6 +79,21 @@ function graficoInteracoes(fkCriador) {
     return database.executar(instrucaoSql);
 }
 
+function buscarkpis(fkCriador) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", fkCriador)
+    console.log(fkCriador)
+    var instrucaoSql = `
+        SELECT
+            (SELECT COUNT(idPoster) FROM poster WHERE fkCriador = ${fkCriador}) AS totalPoster,
+            (SELECT COUNT(fkCriador) FROM curtida WHERE fkCriador = ${fkCriador}) AS totalCurtidas,
+            (SELECT COUNT(fkCriador) FROM comentario WHERE fkCriador = ${fkCriador}) AS totalComentarios,
+            (SELECT COUNT(fkUsuario) FROM curtida WHERE fkUsuario = ${fkCriador}) AS curtidasEnviadas
+            FROM poster WHERE fkCriador = ${fkCriador}
+            GROUP BY fkCriador;
+        `
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 
 module.exports = {
@@ -86,5 +101,6 @@ module.exports = {
     posterUsuario,
     graficoQtdPoster,
     graficoTipo,
-    graficoInteracoes
+    graficoInteracoes,
+    buscarkpis
 };

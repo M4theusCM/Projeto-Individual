@@ -78,6 +78,8 @@ function postar() {
         .then(res => {
             fecharModal()
             buscarPosterUser()
+            // atualizações do banco
+        
         })
         .catch(err => {
             console.log(err);
