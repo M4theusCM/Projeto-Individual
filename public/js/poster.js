@@ -34,19 +34,29 @@ function atualizarPreview(valor) {
 }
 
 function formato() {
-    var tipo = formato.value
-    var formatos = [
-        `preview_formato_poster`,
-        `preview_formato_quadrado`,
-        `preview_formato_horizontal`
-    ]
-    for (var i = 0; i < formato.length; i++) {
-        if (i == tipo) {
-            formatos[i].style.display = `flex`
-        } else {
-            formatos[i].style.display = `none`
-        }
-    }
+    var tipo = select_formato.value
+    var poste = preview_formato_poster
+    var horizontal = preview_formato_horizontal
+    console.log(tipo)
+    // if (tipo == 0) {
+    //     poste.style.display = 'flex'
+    //     horizontal.style.display = 'none'
+    //     var img_perfil = sessionStorage.IMG_USUARIO;
+    //     nickName_user_add_poster.innerHTML = sessionStorage.NICKNAME_USUARIO;
+    //     img_perfil_add_poster.src = `
+    //     ../src/perfils/${img_perfil}
+    // `
+    // } else if (tipo == 1) {
+    //     poste.style.display = 'none'
+    //     horizontal.style.display = 'flex'
+    //     var img_perfil = sessionStorage.IMG_USUARIO;
+    //     nickName_user_add_horizontal.innerHTML = sessionStorage.NICKNAME_USUARIO;
+    //     img_perfil_add_horizontal.src = `
+    //     ../src/perfils/${img_perfil}
+    // `
+    // } else {
+
+    // }
 }
 
 function postar() {
@@ -79,7 +89,7 @@ function postar() {
             fecharModal()
             buscarPosterUser()
             // atualizações do banco
-        
+
         })
         .catch(err => {
             console.log(err);
@@ -100,7 +110,7 @@ function buscarPosterUser() {
         }
     })
         .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            console.error(`Erro na obtenção dos dados p/ poster: ${error.message}`);
         });
 }
 

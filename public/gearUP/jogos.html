@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/gearup.css">
-    <title>GearUP - Home</title>
+    <title>GearUP - Eventos</title>
     <link rel="icon" href="../src/logo.png">
     <link rel="stylesheet" href="../styles/feed.css">
     <script src="../js/sessao.js"></script>
@@ -26,19 +26,19 @@
             </div>
             <div class="area-links">
                 <div class="links">
-                    <a href="./home.html" class="selecionado ">
+                    <a href="./home.html" >
                         <img src="../src/icones/home-icon.png" class="menu-icons" alt="Home">
                         Pagina inicial
                     </a>
                 </div>
                 <div class="links">
-                    <a href="./eventos.html">
+                    <a href="./eventos.html" >
                         <img src="../src/icones/evento-icon.png" class="menu-icons" alt="Calendario">
                         Eventos
                     </a>
                 </div>
                 <div class="links">
-                    <a href="./jogos.html">
+                    <a href="./jogos.html" class="selecionado">
                         <img src="../src/icones/jogo-icon.png" class="menu-icons" alt="controle">
                         Jogos
                     </a>
@@ -82,8 +82,8 @@
 <script>
 
     function feed() {
-        console.log('Passamo 1\n')
-        fetch('/poster/buscarFeed', { cache: 'no-store' }).then(function (response) {
+        var tipo = 'Jogo'
+        fetch(`/poster/buscarFeed/${tipo}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     // console.log(JSON.stringify(resposta))

@@ -95,6 +95,57 @@ function buscarkpis(fkCriador) {
     return database.executar(instrucaoSql);
 }
 
+function buscarFeed(){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+    var instrucaoSql = `
+       SELECT p.idPoster AS idPoster,
+	        p.poster AS imgPoster,
+            p.legenda AS legendaPoster,
+            p.formato AS formatoPoster,
+            p.tipo AS tipoPoster,
+            CONCAT(p.dtPostagem, ' ', p.hrPostagem) AS dataPostagem,
+            p.fkCriador AS criadorPostagem,
+            u.nickName AS nickNameCriador,
+            u.imgPerfil AS imgCriador,
+            COUNT(cur.fkPoster) AS qtdCurtida,
+            COUNT(comen.fkPoster) AS qtdComentarios
+            FROM poster p
+            JOIN usuario u ON u.idUsuario = p.fkCriador
+            LEFT JOIN curtida cur ON p.idPoster = cur.fkPoster AND p.fkCriador = cur.fkCriador
+            LEFT JOIN comentario comen ON p.idPoster = comen.fkPoster AND p.fkCriador = comen.fkCriador
+            GROUP BY p.idPoster, p.poster, p.legenda, p.formato, p.tipo, dataPostagem, p.fkCriador, u.nickName, u.imgPerfil
+            ORDER BY CONCAT(p.dtPostagem, p.hrPostagem) DESC LIMIT 8;
+        `
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarFeedTipo(tipoPoster){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", tipoPoster)
+    var instrucaoSql = `
+       SELECT p.idPoster AS idPoster,
+	        p.poster AS imgPoster,
+            p.legenda AS legendaPoster,
+            p.formato AS formatoPoster,
+            p.tipo AS tipoPoster,
+            CONCAT(p.dtPostagem, ' ', p.hrPostagem) AS dataPostagem,
+            p.fkCriador AS criadorPostagem,
+            u.nickName AS nickNameCriador,
+            u.imgPerfil AS imgCriador,
+            COUNT(cur.fkPoster) AS qtdCurtida,
+            COUNT(comen.fkPoster) AS qtdComentarios
+            FROM poster p
+            JOIN usuario u ON u.idUsuario = p.fkCriador
+            LEFT JOIN curtida cur ON p.idPoster = cur.fkPoster AND p.fkCriador = cur.fkCriador
+            LEFT JOIN comentario comen ON p.idPoster = comen.fkPoster AND p.fkCriador = comen.fkCriador
+            WHERE p.tipo = '${tipoPoster}'
+            GROUP BY p.idPoster, p.poster, p.legenda, p.formato, p.tipo, dataPostagem, p.fkCriador, u.nickName, u.imgPerfil
+            ORDER BY CONCAT(p.dtPostagem, p.hrPostagem) DESC LIMIT 8;
+        `
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     salvar,
@@ -102,5 +153,7 @@ module.exports = {
     graficoQtdPoster,
     graficoTipo,
     graficoInteracoes,
-    buscarkpis
+    buscarkpis,
+    buscarFeed,
+    buscarFeedTipo,
 };

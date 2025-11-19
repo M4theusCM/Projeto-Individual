@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GearUP - Dashboard</title>
+    <link rel="icon" href="../src/logo.png">
+    <link rel="stylesheet" href="../styles/gearup.css">
+    <script src="../js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/poster.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    </style>
+</head>
+
+<body onload="validarSessao(), exibirGraficos()" style="display: flex;">
+    <div class="container-principal" id="container_principal">
+        <div class="menu-lateral">
+            <div class="logo">
+                <a href="./home.html">
+                    <img src="../src/efeitos/gearup - efeito-claro.png" alt="GEARUP">
+                </a>
+            </div>
+            <div class="area-links">
+                <div class="links">
+                    <a href="./home.html">
+                        <img src="../src/icones/home-icon.png" class="menu-icons" alt="Home">
+                        Pagina inicial
+                    </a>
+                </div>
+                <div class="links">
+                    <a href="./eventos.html">
+                        <img src="../src/icones/evento-icon.png" class="menu-icons" alt="Calendario">
+                        Eventos
+                    </a>
+                </div>
+                <div class="links">
+                    <a href="./jogos.html">
+                        <img src="../src/icones/jogo-icon.png" class="menu-icons" alt="controle">
+                        Jogos
+                    </a>
+                </div>
+                <div class="links">
+                    <a href="./filmes.html">
+                        <img src="../src/icones/filme-icon.png" class="menu-icons" alt="Claclete">
+                        Filmes
+                    </a>
+                </div>
+                <div class="links">
+                    <a href="./carros.html">
+                        <img src="../src/icones/carro-icon.png" class="menu-icons" alt="Carros">
+                        Carros
+                    </a>
+                </div>
+            </div>
+            <div class="area-sair">
+                <div class="links">
+                    <a href="./perfil.html" class="selecionado">
+                        <img src="../src/perfils/perfil-5.png" alt="Perfil" id="perfil_img_menu" class="menu-img">
+                        Perfil
+                    </a>
+                </div>
+                <div class="links">
+                    <button onclick="limparSessao()">
+                        <img src="../src/icones/sair-icon.png" alt="Sair" class="menu-img">
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="container-perfil">
+            <div class="banner">
+                <div class="aba" onclick="exibirGeral()">
+                    Geral
+                </div>
+                <div class="aba" onclick="exibirEstatisticas()">
+                    Estatisticas
+                </div>
+            </div>
+            <div class="perfil-estatisticas" id="perfil_estatisticas">
+                <div class="area-graficos">
+                    <div class="graficos grafico-1">
+                        <p>Postagens nos ultimos 7 dias</p>
+                        <canvas id="grf_postagens"></canvas>
+                    </div>
+                    <div class="graficos grafico-2">
+                        <p>Tipo de postagens</p>
+                        <canvas id="grf_tipos"></canvas>
+                    </div>
+                    <div class="graficos grafico-3">
+                        <p>Interações</p>
+                        <canvas id="grf_interacoes"></canvas>
+                    </div>
+                </div>
+                <div class="area-kpis">
+                    <div class="kpis">
+                        <div class="linha">
+                            <div class="h4">Total de Publicações</div>
+                            <p class="valor" id="total_publi">Valor</p>
+                        </div>
+                        <div class="tracos"></div>
+                        <div class="linha">
+                            <div class="h4">Curtidas Recebidas</div>
+                            <p class="valor" id="curtidas_recebidas">Valor</p>
+                        </div>
+                        <div class="tracos"></div>
+                        <div class="linha">
+                            <div class="h4">Comentarios Recebidos</div>
+                            <p class="valor" id="comentarios_recebidos">Valor</p>
+                        </div>
+                        <div class="tracos"></div>
+                        <div class="linha">
+                            <div class="h4">Curtidas Enviadas</div>
+                            <p class="valor" id="curtidas_enviadas">Valor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- Graficos -->
+<script>
+
+</script>
+
+<!-- Funções -->
+<script>
+    
+    function exibirGraficos() {
+        graficoQtdPoster()
+        grafiTipos()
+        graficosInteracoes()
+        buscarkpis()
+    }
+
+    function exibirGeral(){
+       window.location = './perfil.html'
+    }
+    function exibirEstatisticas(){
+       window.location = './dashboard.html'
+    }
+</script>
+
+<!-- Dashboard -->
+<script>
+    var qtdPoster = []
+    var qtdTipos = []
+    var qtdCurtida = []
+    var qtdComentario = []
+    var qtdPosterinteracao = []
+    var parametrosGraf1 = []
+    function graficoQtdPoster() {
+        var fkCriador = sessionStorage.ID_USUARIO
+        fetch(`/poster/graficoQtdPoster/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    var tamanho = resposta.length
+                    var vetorTemp = []
+                    for (var i = 0; i < tamanho; i++) {
+                        vetorTemp.push(resposta[i].qtdPostagens)
+                    }
+                    qtdPoster = vetorTemp
+                    atualizarGraficos()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function grafiTipos() {
+        var fkCriador = sessionStorage.ID_USUARIO
+        fetch(`/poster/graficoTipo/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    var vetortemp = []
+                    vetortemp.push(resposta[0].qtdFilmes)
+                    vetortemp.push(resposta[0].qtdJogo)
+                    vetortemp.push(resposta[0].qtdEvento)
+                    vetortemp.push(resposta[0].qtdCarro)
+                    qtdTipos = vetortemp
+
+                    atualizarGraf2()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function graficosInteracoes() {
+        var fkCriador = sessionStorage.ID_USUARIO
+        fetch(`/poster/graficoInteracoes/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    var vetorTempCurtida = []
+                    var vetorTempComentario = []
+                    var vetorTempPostagens = []
+                    var tamanho = resposta.length
+                    for (var i = 0; i < tamanho; i++) {
+                        var atual = resposta[i]
+                        vetorTempCurtida.push(atual.qtdCurtidas)
+                        vetorTempComentario.push(atual.qtdComentarios)
+                        vetorTempPostagens.push(atual.idPoster)
+                    }
+                    qtdComentario = vetorTempComentario
+                    qtdCurtida = vetorTempCurtida
+                    qtdPosterinteracao = vetorTempPostagens
+                    atualizarGraf3()
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function buscarkpis() {
+        var fkCriador = sessionStorage.ID_USUARIO
+        fetch(`/poster/kpis/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    total_publi.innerHTML = resposta[0].totalPoster
+                    curtidas_recebidas.innerHTML = resposta[0].totalCurtidas
+                    comentarios_recebidos.innerHTML = resposta[0].totalComentarios
+                    curtidas_enviadas.innerHTML = resposta[0].curtidasEnviadas
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+
+    function atualizarGraficos() {
+        const grf1 = document.getElementById('grf_postagens');
+        new Chart(grf1, {
+            type: 'line',
+            data: {
+                // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: ['Dia 1', 'Dia 2', 'Dia 3', 'Dia 4', 'Dia 5', 'Dia 6'],
+                datasets: [{
+                    label: 'Postagens',
+                    data: qtdPoster,
+                    borderWidth: 3,
+                    borderColor: '#006aff',
+                    backgroundColor: '#006aff',
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#FFF'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#FFF'
+                        }
+                    }
+                }
+            }
+        });
+    }
+    function atualizarGraf2() {
+        const grf2 = document.getElementById('grf_tipos');
+        new Chart(grf2, {
+            type: 'pie',
+            data: {
+                labels: ['Filmes', 'Jogos', 'Eventos', 'qtdCarro'],
+                datasets: [{
+                    label: '# Postes',
+                    data: qtdTipos,
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+
+
+            }
+        });
+    }
+
+    function atualizarGraf3() {
+
+        const grf3 = document.getElementById('grf_interacoes');
+        new Chart(grf3, {
+            type: 'bar',
+            data: {
+                labels: qtdPosterinteracao,
+                datasets: [{
+                    label: 'Interações de Curtidas',
+                    data: qtdCurtida,
+                    borderWidth: 1,
+                    backgroundColor: "rgba(212, 14, 14, 0.281)",
+                    borderColor: "rgb(212, 14, 14)"
+                },
+                {
+                    label: 'Interações de Comentario',
+                    data: qtdComentario,
+                    borderWidth: 1,
+                    backgroundColor: "rgba(14, 77, 212, 0.281)",
+                    borderColor: "rgb(14, 77, 212)"
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+    }
+
+
+</script>
+
+</html>
