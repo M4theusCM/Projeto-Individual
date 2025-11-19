@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/gearup.css">
-    <title>GearUP - Eventos</title>
+    <title>GearUP - Filmes</title>
     <link rel="icon" href="../src/logo.png">
     <link rel="stylesheet" href="../styles/feed.css">
     <script src="../js/sessao.js"></script>
@@ -44,12 +44,12 @@
                     </a>
                 </div>
                 <div class="links">
-                    <a href="./filmes.html" class="selecionado">
+                    <a href="./filmes.html"  class="selecionado">
                         <img src="../src/icones/filme-icon.png" class="menu-icons" alt="Claclete">
                         Filmes
                     </a>
                 </div>
-                <div class="links" >
+                <div class="links">
                     <a href="./carros.html">
                         <img src="../src/icones/carro-icon.png" class="menu-icons" alt="Carros">
                         Carros
@@ -82,7 +82,7 @@
 <script>
 
     function feed() {
-        var tipo = 'Filmes'
+        var tipo = 'Filme'
         fetch(`/poster/buscarFeed/${tipo}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {

@@ -108,10 +108,11 @@ function buscarFeed(req, res) {
 function buscarFeedTipo(req, res) {
   var tipoPoster = req.params.tipo;
   posterModel.buscarFeedTipo(tipoPoster).then(function (resultado) {
-    if (resultado.length >= 0) {
+    // var semFilme = {Posters,''}
+    if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {
-      res.status(204).send("Nenhum resultado encontrado!")
+      res.status(204).json("Nenhum resultado encontrado!")
     }
   }).catch(function (erro) {
     console.log(erro);

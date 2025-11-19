@@ -23,10 +23,10 @@ function posterUsuario(idCriador) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", idCriador)
     var instrucaoSql = `
             SELECT idPoster, poster, COUNT(fkPoster) AS curtidas
-	        FROM poster p LEFT JOIN curtida c ON p.idPoster = c.fkPoster
+	        FROM poster p LEFT JOIN curtida c ON p.idPoster = c.fkPoster AND p.fkCriador = c.fkCriador
 	        WHERE p.fkCriador = ${idCriador} 
             GROUP BY idPoster
-            order by dtPostagem;
+            order by idPoster;
         `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -70,10 +70,11 @@ function graficoInteracoes(fkCriador) {
             COUNT(l.fkPoster) AS qtdCurtidas,
             COUNT(c.idComentario) AS qtdComentarios
             FROM poster p
-            LEFT JOIN curtida l ON p.idPoster = l.fkPoster
-            LEFT JOIN comentario c ON p.idPoster = c.fkPoster
+            LEFT JOIN curtida l ON p.idPoster = l.fkPoster AND p.fkCriador = l.fkCriador
+            LEFT JOIN comentario c ON p.idPoster = c.fkPoster AND p.fkCriador = c.fkCriador
             WHERE p.fkCriador = ${fkCriador}
-            GROUP BY idPoster limit 6;
+            GROUP BY idPoster 
+            ORDER BY idPoster DESC limit 6;
         `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

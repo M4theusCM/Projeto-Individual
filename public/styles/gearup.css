@@ -409,7 +409,6 @@ body {
     z-index: 300;
     backdrop-filter: blur(5px);
     flex-direction: column;
-    display: block;
 
 }
 

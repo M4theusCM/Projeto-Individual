@@ -82,7 +82,7 @@
 <script>
 
     function feed() {
-        var tipo = 'Carros'
+        var tipo = 'Carro'
         fetch(`/poster/buscarFeed/${tipo}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
