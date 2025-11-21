@@ -26,13 +26,13 @@
             </div>
             <div class="area-links">
                 <div class="links">
-                    <a href="./home.html" >
+                    <a href="./home.html">
                         <img src="../src/icones/home-icon.png" class="menu-icons" alt="Home">
                         Pagina inicial
                     </a>
                 </div>
                 <div class="links">
-                    <a href="./eventos.html" >
+                    <a href="./eventos.html">
                         <img src="../src/icones/evento-icon.png" class="menu-icons" alt="Calendario">
                         Eventos
                     </a>
@@ -72,7 +72,6 @@
             </div>
         </div>
         <div class="container container-feed" id="container_feed">
-
         </div>
     </div>
 </body>
@@ -80,7 +79,6 @@
 </html>
 
 <script>
-
     function feed() {
         var tipo = 'Jogo'
         fetch(`/poster/buscarFeed/${tipo}`, { cache: 'no-store' }).then(function (response) {
@@ -98,47 +96,296 @@
             })
     }
 
-    function exibir(resposta) {
+    async function exibir(resposta) {
         // console.log(JSON.stringify(resposta))
         var posters = ''
         var qdtFeeds = resposta.length
         for (var i = 0; i < qdtFeeds; i++) {
             var feedAtual = resposta[i]
+            var idPoster = feedAtual.idPoster
+            var fkCriador = feedAtual.criadorPostagem
+            var imgCurtida = await statusCurtida(idPoster);
+            var qtdCurtida = await buscarQtdCurtida(idPoster, fkCriador)
+            var qtdComentario = await buscarQtdComentarios(idPoster, fkCriador)
+            var comentarios = await comentariosDisplay(idPoster, fkCriador)
+            // console.log('\t passou')
             posters += `
                 <div class="card card-post">
-                    <div class="imgPost">
-                        <img src="../src/posters/${feedAtual.imgPoster}" alt="Poster">
+                <div class="imgPost">
+                    <img src="../src/posters/${feedAtual.imgPoster}" alt="Poster">
+                </div>
+                <div class="infosPost">
+                    <div class="criador">
+                        <img src="../src/perfils/${feedAtual.imgCriador}" alt="GR">
+                        <p>${feedAtual.nickNameCriador}</p>
                     </div>
-                    <div class="infosPost">
-                        <div class="criador">
-                            <img src="../src/perfils/${feedAtual.imgCriador}" alt="GR">
-                            <p>${feedAtual.nickNameCriador}</p>
+                    <div class="legendas">
+                        <p>${feedAtual.legendaPoster}</p>
+                    </div>
+                    <div class="estatisticas">
+                        <div onclick="alterarStatusCurtida(${idPoster}, ${feedAtual.criadorPostagem})">
+                            ${imgCurtida}
+                            <p>${qtdCurtida}</p>
+                            <span>Curtidas</span>
                         </div>
-                        <div class="legendas">
-                            <p>${feedAtual.legendaPoster}</p>
+                        <div>
+                            <img src="../src/icones/comentarios.png" alt="">
+                            <p>${qtdComentario}</p>
+
+                            <span>Comentarios</span>
                         </div>
-                        <div class="estatisticas">
-                            <div>
-                                <img src="../src/icones/coracao.png" alt="">
-                                <p>${feedAtual.qtdCurtida}</p>
-                                <span>Curtidas</span>
+                    </div>
+                    <div class="comentarios-area">
+                        
+                        <p>Ver mais</p>
+                    </div>
+                    <div class="add-comentario" onclick="addComentario(${idPoster})">
+                        Comentar
+                    </div>
+                    <div class="modal_add" id="modal_id_${idPoster}">
+                        <div class="fechar-add-poster" onclick="fecharModal(${idPoster})">
+                            <img src="../src/acessos/Arrow 1.png" alt="Voltar">   
+                        </div>
+                        <label for="">
+                            <h3>Digite o seu comentario:</h3>
+                            <textarea class="ipt-comentario" id="txt_comentario_${idPoster}"></textarea>
+                        </label>
+                        <div  class="enviar">
+                            <div onclick="enviar(${idPoster}, ${fkCriador})" class="button">
+                                <p>Enviar</p>
+                                <img src="../src/icones/Simplification.png" alt="->">
                             </div>
-                            <div>
-                                <img src="../src/icones/comentarios.png" alt="">
-                                <p>${feedAtual.qtdComentarios}</p>
-                                <span>Comentarios</span>
-                            </div>
                         </div>
-                        <div class="comentarios-area">
-                            <div class="comentarios"></div>
-                            <div class="comentarios"></div>
-                            <p>Ver mais</p>
-                        </div>
+                        
                     </div>
                 </div>
+            </div>
             `
         }
-        container_feed.innerHTML = posters 
+        container_feed.innerHTML = posters
+    }
+
+
+
+    // Comentarios
+    function buscarQtdComentarios(idPoster, fkCriador) {
+        return fetch("/comentarios/qtdComentario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fkPosterServer: idPoster,
+                fkCriadorServer: fkCriador
+            }),
+        })
+
+            .then(
+                function (resposta) {
+                    if (resposta.ok) {
+                        return resposta.json().then(qtdComentarios => {
+                            // console.log("To aq: "+JSON.stringify(qtdComentarios))
+                            return qtdComentarios[0].qtdComentariosPoster
+                        })
+                    } else {
+                        throw "Houve um erro ao tentar buscar a qtd de curtidas do poste!";
+                    }
+                })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+    }
+
+
+    function addComentario(idPoster) {
+        var ipt = document.getElementById(`modal_id_${idPoster}`)
+        ipt.style.display = `flex`
+    }
+
+    function fecharModal(idPoster) {
+        var ipt = document.getElementById(`modal_id_${idPoster}`)
+        ipt.style.display = `none`
+    }
+
+    function enviar(idPoster, fkCriador) {
+        var fkUsuario = sessionStorage.ID_USUARIO
+        var txt_comentario = document.getElementById(`txt_comentario_${idPoster}`)
+        var comentario = (txt_comentario.value).trim()
+        if (comentario != '') {
+            fetch("/comentarios/comentar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    fkPosterServer: idPoster,
+                    fkCriadorServer: fkCriador,
+                    fkUsuarioServer: fkUsuario,
+                    comentarioServer: comentario
+                }),
+            })
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        feed()
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                    finalizarAguardar();
+                });
+        }
+    }
+
+    function comentariosDisplay(idPoster, fkCriador) {
+        return fetch("/comentarios/comentariosDisplay", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fkPosterServer: idPoster,
+                fkCriadorServer: fkCriador
+            }),
+        })
+
+            .then(
+                function (resposta) {
+                    if (resposta.ok) {
+                        return resposta.json().then(comentariosPoster => {
+                            console.log("To aq: " + JSON.stringify(comentariosPoster))
+                            var tamanhoComentariosPoster = comentariosPoster.length
+                            var comentarioCaixinha = ''
+                            /*
+                                <div class="comentarios"></div>
+                            */
+                            for (var i = 0; i < tamanho; i++) {
+                                var comentarioAtual = comentariosPoster[i]
+                                msg += `
+                                    <div class="comentarios">
+                                        
+                                    </div>
+                                `
+                            }
+                            // return comentariosPoster[0].qtdComentariosPoster
+                        })
+                    } else {
+                        throw "Houve um erro ao tentar buscar a qtd de curtidas do poste!";
+                    }
+                })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+    }
+
+
+
+    // Curtidas
+    function buscarQtdCurtida(idPoster, fkCriador) {
+        return fetch("/curtidas/qtdCurtida", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fkPosterServer: idPoster,
+                fkCriadorServer: fkCriador
+            }),
+        })
+
+            .then(
+                function (resposta) {
+                    if (resposta.ok) {
+                        return resposta.json().then(qtd => {
+                            console.log("To aq: " + JSON.stringify(qtd))
+                            return qtd[0].qtdCurtidasPoster
+                        })
+                    } else {
+                        throw "Houve um erro ao tentar buscar a qtd de curtidas do poste!";
+                    }
+                })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+    }
+
+    function statusCurtida(idPoster) {
+        var fkUsuario = sessionStorage.ID_USUARIO
+
+        return fetch("/curtidas/buscarStatus", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fkPosterServer: idPoster,
+                fkUsuarioServer: fkUsuario,
+            }),
+        })
+
+            .then(
+                function (resposta) {
+                    // console.log("resposta: ", resposta);
+                    if (resposta.ok) {
+                        //  var a = 'bom bom bom'
+                        // return a
+                        return resposta.json().then(status => {
+                            // console.log("Olha o status: "+JSON.stringify(status))
+                            var statusPost = status[0].statusCurtida
+                            if (statusPost == 0) {
+                                // console.log(statusPost)
+                                var imgTemp = `<img class="curtidaBotao" src="../src/icones/Coracao0.png" alt="Curtir"`
+                            } else {
+                                var imgTemp = `<img class="curtidaBotao" src="../src/icones/coracao1.png" alt="Descurtir">`
+                            }
+                            return imgTemp
+                        })
+                    } else {
+                        throw "Houve um erro ao tentar curtir!";
+                    }
+                })
+            .catch(function (resposta) {
+                // console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+    }
+
+    function alterarStatusCurtida(idPoster, fkCriador) {
+        var fkUsuario = sessionStorage.ID_USUARIO
+
+        // console.log('a')
+
+        fetch("/curtidas/alterarStatus", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fkPosterServer: idPoster,
+                fkUsuarioServer: fkUsuario,
+                fkCriadorServer: fkCriador
+            }),
+        })
+
+            .then(
+                function (resposta) {
+                    if (resposta.ok) {
+                        resposta.json().then(status => {
+                            // console.log(JSON.stringify(status))
+                            feed()
+                        })
+                    } else {
+                        throw "Houve um erro ao tentar realizar curtida!";
+                    }
+                })
+            .catch(function (resposta) {
+                // console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
     }
 
 </script>

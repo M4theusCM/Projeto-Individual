@@ -3,13 +3,16 @@ var router = express.Router();
 
 var curtidaController = require("../controllers/curtidaController")
 
-router.get('/qtdCurtida/:fkPoster', function(req, res){
-    curtidaController.qtdCurtida(req, res)
+router.post('/qtdCurtida', function(req, res){
+    curtidaController.buscarQtdCurtidas(req, res)
 })
 
 router.post('/buscarStatus', function(req, res){
     curtidaController.buscarStatus(req, res)
 })
 
+router.post('/alterarStatus', function(req, res){
+    curtidaController.alterarStatus(req, res)
+})
 
 module.exports = router

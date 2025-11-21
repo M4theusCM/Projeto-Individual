@@ -1,7 +1,7 @@
 const posterModel = require('../models/posterModel');
 
 function salvar(req, res) {
-  console.log('Estou no controller')
+  // console.log('Estou no controller')
   const poster = req.file.filename;
 
   const { fkCriador, legenda, formato, tipo } = req.body

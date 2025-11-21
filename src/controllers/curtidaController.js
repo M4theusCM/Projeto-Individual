@@ -1,18 +1,21 @@
 const curtidaModel = require("../models/curtidaModel")
 
-function qtdCurtida(req, res) {
-    var fkPoster = req.params.fkPoster;
-    curtidaModel.qtdCurtidas(fkPoster).then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
-        } else {
-            res.status(200).send('Erro aq')
-        }
-    }).catch(function (erro) {
-        console.log(erro);
-        console.log("Houve um erro ao buscar a quantidade de postagens.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-    });
+function buscarQtdCurtidas(req, res) {
+     var fkCriador = req.body.fkCriadorServer
+    var fkPoster = req.body.fkPosterServer
+    if (fkCriador == undefined) {
+        res.status(400).send("fkCriador está indefinida")
+    } else if (fkPoster == undefined) {
+        res.status(400).send("fkPoster está indefinida")
+    } else {
+        curtidaModel.buscarQtdCurtidas(fkPoster, fkCriador)
+            .then(
+                function (resultadoStatusCurtida) {
+                    // console.log(`Resultados: ${JSON.stringify(resultadoStatusCurtida)}`); // transforma JSON em String
+                    res.json(resultadoStatusCurtida)
+                }
+            )
+    }
 }
 
 function buscarStatus(req, res) {
@@ -23,16 +26,40 @@ function buscarStatus(req, res) {
     } else if (fkPoster == undefined) {
         res.status(400).send("fkPoster está indefinida")
     } else {
-        curtidaModel.buscarStatus(fkUsuario, fkPoster)
+        curtidaModel.buscarStatus(fkPoster, fkUsuario)
             .then(
                 function (resultadoStatusCurtida) {
-                    console.log(`Resultados: ${JSON.stringify(resultadoStatusCurtida)}`); // transforma JSON em String
+                    // console.log(`Resultados: ${JSON.stringify(resultadoStatusCurtida)}`); // transforma JSON em String
+                    res.json(resultadoStatusCurtida)
                 }
             )
     }
 }
 
+function alterarStatus(req, res) {
+    var fkUsuario = req.body.fkUsuarioServer
+    var fkCriador = req.body.fkCriadorServer
+    var fkPoster = req.body.fkPosterServer
+    if (fkUsuario == undefined) {
+        res.status(400).send("fkUsuario está indefinida")
+    } else if (fkPoster == undefined) {
+        res.status(400).send("fkPoster está indefinida")
+    } else if (fkCriador == undefined){
+        res.status(400).send("fkCriador está indefinida")
+    } else {
+        curtidaModel.alterarStatus(fkPoster, fkCriador, fkUsuario)
+            .then(
+                function (resultadoStatusCurtida) {
+                    // console.log(`Resultados: ${JSON.stringify(resultadoStatusCurtida)}`); // transforma JSON em String
+                    res.json(resultadoStatusCurtida)
+                }
+            )
+    }
+}
+
+
 module.exports = {
-    qtdCurtida,
+    buscarQtdCurtidas,
     buscarStatus,
+    alterarStatus
 }
