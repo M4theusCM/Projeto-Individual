@@ -38,10 +38,10 @@ function comentariosPosterDisplay(fkPoster, fkCriador) {
             nickName AS nomeUsuario
 	        FROM comentario 
                 JOIN usuario ON idUsuario = fkUsuario
-            WHERE fkPoster = 9 AND fkCriador = ${fkCriador}
+            WHERE fkPoster = ${fkPoster} AND fkCriador = ${fkCriador}
                 ORDER BY idComentario DESC  LIMIT 3;
     `
-    // console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 

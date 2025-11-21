@@ -72,6 +72,7 @@
             </div>
         </div>
         <div class="container container-feed" id="container_feed">
+
         </div>
     </div>
 </body>
@@ -110,7 +111,7 @@
             var comentarios = await comentariosDisplay(idPoster, fkCriador)
             // console.log('\t passou')
             posters += `
-                <div class="card card-post">
+                <div class="card card-post" id="card_poster_id_${idPoster}">
                 <div class="imgPost">
                     <img src="../src/posters/${feedAtual.imgPoster}" alt="Poster">
                 </div>
@@ -125,18 +126,17 @@
                     <div class="estatisticas">
                         <div onclick="alterarStatusCurtida(${idPoster}, ${feedAtual.criadorPostagem})">
                             ${imgCurtida}
-                            <p>${qtdCurtida}</p>
+                            <p id="qtdCurtidas_poster_id_${idPoster}">${qtdCurtida}</p>
                             <span>Curtidas</span>
                         </div>
                         <div>
                             <img src="../src/icones/comentarios.png" alt="">
-                            <p>${qtdComentario}</p>
-
+                            <p id="qtdComentario_poster_id_${idPoster}">${qtdComentario}</p>
                             <span>Comentarios</span>
                         </div>
                     </div>
                     <div class="comentarios-area">
-                        
+                         ${comentarios}
                         <p>Ver mais</p>
                     </div>
                     <div class="add-comentario" onclick="addComentario(${idPoster})">
@@ -161,10 +161,23 @@
                 </div>
             </div>
             `
+            container_feed.innerHTML = posters
         }
-        container_feed.innerHTML = posters
     }
-
+    async function atualizarPoster(idPoster, fkCriador, tipo) {
+        var divPoster = document.getElementById(`card_poster_id_${idPoster}`)
+        if (tipo == 'Curtida') {
+            var curtidaTemp = await buscarQtdCurtida(idPoster, fkCriador);
+            // var statusCurtidaPoster = await statusCurtida(idPoster)
+            var idCurtidaPoster = document.getElementById(`qtdCurtidas_poster_id_${idPoster}`)
+            idCurtidaPoster.innerHTML = curtidaTemp
+            
+        } else {
+            var comentarioTemp = await buscarQtdComentarios(idPoster, fkCriador)
+            var idComentarioPoster = document.getElementById(`qtdComentario_poster_id_${idPoster}`)
+            idComentarioPoster = comentarioTemp
+        }
+    }
 
 
     // Comentarios
@@ -227,7 +240,8 @@
             })
                 .then(function (resposta) {
                     if (resposta.ok) {
-                        feed()
+                        fecharModal(idPoster)
+                        atualizarPoster(idPoster, fkCriador, 'Comentario')
                     } else {
                         throw "Houve um erro ao tentar realizar o cadastro!";
                     }
@@ -255,21 +269,27 @@
                 function (resposta) {
                     if (resposta.ok) {
                         return resposta.json().then(comentariosPoster => {
-                            console.log("To aq: " + JSON.stringify(comentariosPoster))
+                            // console.log("To aq: " + JSON.stringify(comentariosPoster))
                             var tamanhoComentariosPoster = comentariosPoster.length
                             var comentarioCaixinha = ''
                             /*
                                 <div class="comentarios"></div>
                             */
-                            for (var i = 0; i < tamanho; i++) {
+                            var msg = ''
+                            console.log(comentariosPoster[0])
+                            for (var i = 0; i < tamanhoComentariosPoster; i++) {
                                 var comentarioAtual = comentariosPoster[i]
                                 msg += `
                                     <div class="comentarios">
-                                        
+                                        <div class="criadorComentario">
+                                            <img src="../src/perfils/${comentarioAtual.Imgusuario}" alt="">
+                                            <p>${comentarioAtual.nomeUsuario} </p>
+                                            </div>                
+                                            <p class="testo_comentado">${comentarioAtual.comentario}</p>
                                     </div>
                                 `
                             }
-                            // return comentariosPoster[0].qtdComentariosPoster
+                            return msg
                         })
                     } else {
                         throw "Houve um erro ao tentar buscar a qtd de curtidas do poste!";
@@ -376,7 +396,7 @@
                     if (resposta.ok) {
                         resposta.json().then(status => {
                             // console.log(JSON.stringify(status))
-                            feed()
+                            atualizarPoster(idPoster, fkCriador, 'Curtida')
                         })
                     } else {
                         throw "Houve um erro ao tentar realizar curtida!";
