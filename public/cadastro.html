@@ -149,7 +149,6 @@
             exibirErros(6)
         } else { // cadastro
 
-
             // Enviando o valor da nova input
             var existe = await buscarIndentificador()
             if (existe == false) {
@@ -181,8 +180,8 @@
                                 window.location = "./login.html";
                             }, "1500");
 
-                            limparFormulario();
-                            finalizarAguardar();
+                            // limparFormulario();
+                            // finalizarAguardar();
                         } else {
                             throw "Houve um erro ao tentar realizar o cadastro!";
                         }
@@ -200,7 +199,6 @@
 
     function indentificador() {
         var indentificador = ipt_indentificador.value
-        /*Tira a mascara antiga*/
         indentificador = indentificador.replace('(', '').replace(')', '').replace(' ', '').replace('-', '')
         var tamanho = indentificador.length
         var letras = [
@@ -280,9 +278,7 @@
                     }
 
                 });
-
                 console.log('Existe')
-
                 if (comparacaoEmail != 'vazio' ||
                     comparacaoNick != 'vazio' ||
                     comparacaoTell != 'vazio'
@@ -325,6 +321,7 @@
             pop_up_erro.style.display = 'none'
         }, 3000)
     }
+
     function exibirSucesso() {
         pop_up_erro.style.display = 'flex'
         msg_erro.innerHTML = `Cadastro realizado com sucesso`

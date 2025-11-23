@@ -114,9 +114,8 @@
                 });
 
             } else {
-
+                exibirErros(2)
                 console.log("Houve um erro ao tentar realizar o login!");
-
                 resposta.text().then(texto => {
                     console.error(texto);
                     finalizarAguardar(texto);
@@ -135,6 +134,7 @@
         var msgErros = [
             `Preencha o campo com seu email, telefone ou nickName`,
             `Preencha o campo da senha`,
+            `Senha ou identificador errados`
         ]
         pop_up_erro.style.display = 'flex'
         msg_erro.innerHTML = msgErros[erro]

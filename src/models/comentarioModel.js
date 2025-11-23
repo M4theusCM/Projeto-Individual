@@ -2,7 +2,6 @@ var database = require("../database/config")
 
 function buscarQtdComentarios(fkPoster, fkCriador) {
     // console.log("ACESSEI O Comentarios MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarQtdComentario(): ", fkCriador, fkPoster)
-
     var instrucaoSql = `
         SELECT count(fkPoster) AS qtdComentariosPoster from comentario WHERE fkPoster = ${fkPoster} AND fkCriador = ${fkCriador};
     `

@@ -6,7 +6,6 @@ async function salvar(poster) {
     const qtdPoster = `SELECT COUNT(idPoster) AS quantidadeId FROM poster
 	WHERE fkCriador = ${poster.fkCriador};`
     // WHERE fkCriador = ${poster.fkCriador};`
-
     const respostaSelect = await database.executar(qtdPoster)
     const novoIdPoster = respostaSelect[0].quantidadeId + 1
 
@@ -15,7 +14,6 @@ async function salvar(poster) {
     `;
 
     console.log(instrucao)
-
     return database.executar(instrucao);
 }
 
@@ -27,70 +25,6 @@ function posterUsuario(idCriador) {
 	        WHERE p.fkCriador = ${idCriador} 
             GROUP BY idPoster
             order by idPoster;
-        `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
-
-function graficoQtdPoster(fkCriador) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", fkCriador)
-    console.log(fkCriador)
-    var instrucaoSql = `
-        SELECT COUNT(idPoster) AS qtdPostagens,
-	    dtPostagem AS datasPostagens FROM poster
-	    WHERE dtPostagem >= date_sub(now(), interval 7 day) AND dtPostagem <= current_timestamp() AND fkCriador = ${fkCriador}
-        GROUP BY dtPostagem LIMIT 7
-        `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
-
-function graficoTipo(fkCriador) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", fkCriador)
-    console.log(fkCriador)
-    var instrucaoSql = `
-        SELECT fkCriador, 
-            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'filme' AND fkCriador = ${fkCriador}) AS qtdFilmes,
-            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'jogo' AND fkCriador = ${fkCriador}) AS qtdJogo,
-            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'evento' AND fkCriador = ${fkCriador}) AS qtdEvento,
-            (SELECT COUNT(tipo) FROM poster WHERE tipo = 'carro' AND fkCriador = ${fkCriador}) AS qtdCarro
-            FROM poster
-            WHERE fkCriador = ${fkCriador}
-            GROUP BY fkCriador;
-        `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
-
-function graficoInteracoes(fkCriador) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", fkCriador)
-    console.log(fkCriador)
-    var instrucaoSql = `
-        SELECT idPoster, 
-            COUNT(l.fkPoster) AS qtdCurtidas,
-            COUNT(c.idComentario) AS qtdComentarios
-            FROM poster p
-            LEFT JOIN curtida l ON p.idPoster = l.fkPoster AND p.fkCriador = l.fkCriador
-            LEFT JOIN comentario c ON p.idPoster = c.fkPoster AND p.fkCriador = c.fkCriador
-            WHERE p.fkCriador = ${fkCriador}
-            GROUP BY idPoster 
-            ORDER BY idPoster DESC limit 6;
-        `
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
-
-function buscarkpis(fkCriador) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", fkCriador)
-    console.log(fkCriador)
-    var instrucaoSql = `
-        SELECT
-            (SELECT COUNT(idPoster) FROM poster WHERE fkCriador = ${fkCriador}) AS totalPoster,
-            (SELECT COUNT(fkCriador) FROM curtida WHERE fkCriador = ${fkCriador}) AS totalCurtidas,
-            (SELECT COUNT(fkCriador) FROM comentario WHERE fkCriador = ${fkCriador}) AS totalComentarios,
-            (SELECT COUNT(fkUsuario) FROM curtida WHERE fkUsuario = ${fkCriador}) AS curtidasEnviadas
-            FROM poster WHERE fkCriador = ${fkCriador}
-            GROUP BY fkCriador;
         `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -151,10 +85,6 @@ function buscarFeedTipo(tipoPoster){
 module.exports = {
     salvar,
     posterUsuario,
-    graficoQtdPoster,
-    graficoTipo,
-    graficoInteracoes,
-    buscarkpis,
     buscarFeed,
     buscarFeedTipo,
 };

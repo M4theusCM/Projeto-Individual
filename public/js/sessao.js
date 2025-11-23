@@ -1,12 +1,5 @@
 // sessão
 function validarSessao() {
-    // var email = sessionStorage.EMAIL_USUARIO;
-    // var nome = sessionStorage.NOME_USUARIO;
-    // var cpf = sessionStorage.CPF_USUARIO;
-
-    // var b_usuario = document.getElementById("b_usuario");
-    // var cpf_usuario = document.getElementById("cpf_usuario")
-
     var email = sessionStorage.EMAIL_USUARIO
     var tell = sessionStorage.TELL_USUARIO
     var nome = sessionStorage.NOME_USUARIO
@@ -14,7 +7,6 @@ function validarSessao() {
     var desc = sessionStorage.DESC_USUARIO
     var img = sessionStorage.IMG_USUARIO
     var id = sessionStorage.ID_USUARIO
-
 
     if ((email != null || tell != null)
         && nome != null && nickName != null

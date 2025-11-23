@@ -31,66 +31,6 @@ function posterUsuario(req, res) {
   });
 }
 
-function graficoQtdPoster(req, res) {
-  var fkCriador = req.params.fkCriador;
-  posterModel.graficoQtdPoster(fkCriador).then(function (resultado) {
-    if (resultado.length > 0) {
-      res.status(200).json(resultado);
-    } else {
-      res.status(204).send("Nenhum resultado encontrado!")
-    }
-  }).catch(function (erro) {
-    console.log(erro);
-    console.log("Houve um erro ao buscar a quantidade de postagens.", erro.sqlMessage);
-    res.status(500).json(erro.sqlMessage);
-  });
-}
-
-function graficoTipo(req, res) {
-  var fkCriador = req.params.fkCriador;
-  posterModel.graficoTipo(fkCriador).then(function (resultado) {
-    if (resultado.length > 0) {
-      res.status(200).json(resultado);
-    } else {
-      res.status(204).send("Nenhum resultado encontrado!")
-    }
-  }).catch(function (erro) {
-    console.log(erro);
-    console.log("Houve um erro ao buscar a quantidade de postagens.", erro.sqlMessage);
-    res.status(500).json(erro.sqlMessage);
-  });
-}
-
-function graficoInteracoes(req, res) {
-  var fkCriador = req.params.fkCriador;
-  posterModel.graficoInteracoes(fkCriador).then(function (resultado) {
-    if (resultado.length > 0) {
-      res.status(200).json(resultado);
-    } else {
-      res.status(204).send("Nenhum resultado encontrado!")
-    }
-  }).catch(function (erro) {
-    console.log(erro);
-    console.log("Houve um erro ao buscar a quantidade de postagens.", erro.sqlMessage);
-    res.status(500).json(erro.sqlMessage);
-  });
-}
-
-function buscarkpis(req, res) {
-  var fkCriador = req.params.fkCriador;
-  posterModel.buscarkpis(fkCriador).then(function (resultado) {
-    if (resultado.length > 0) {
-      res.status(200).json(resultado);
-    } else {
-      res.status(204).send("Nenhum resultado encontrado!")
-    }
-  }).catch(function (erro) {
-    console.log(erro);
-    console.log("Houve um erro ao buscar as kpis.", erro.sqlMessage);
-    res.status(500).json(erro.sqlMessage);
-  });
-}
-
 function buscarFeed(req, res) {
   posterModel.buscarFeed().then(function (resultado) {
     if (resultado.length >= 0) {
@@ -108,7 +48,6 @@ function buscarFeed(req, res) {
 function buscarFeedTipo(req, res) {
   var tipoPoster = req.params.tipo;
   posterModel.buscarFeedTipo(tipoPoster).then(function (resultado) {
-    // var semFilme = {Posters,''}
     if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {
@@ -125,10 +64,6 @@ function buscarFeedTipo(req, res) {
 module.exports = {
   salvar,
   posterUsuario,
-  graficoQtdPoster,
-  graficoTipo,
-  graficoInteracoes,
-  buscarkpis,
   buscarFeed,
   buscarFeedTipo
 }
