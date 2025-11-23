@@ -20,13 +20,14 @@ function buscarQtdCurtidas(req, res) {
 
 function buscarStatus(req, res) {
     var fkUsuario = req.body.fkUsuarioServer
+    var fkCriador = req.body.fkCriadorServer
     var fkPoster = req.body.fkPosterServer
     if (fkUsuario == undefined) {
         res.status(400).send("fkUsuario está indefinida")
     } else if (fkPoster == undefined) {
         res.status(400).send("fkPoster está indefinida")
     } else {
-        curtidaModel.buscarStatus(fkPoster, fkUsuario)
+        curtidaModel.buscarStatus(fkPoster,fkCriador ,fkUsuario)
             .then(
                 function (resultadoStatusCurtida) {
                     // console.log(`Resultados: ${JSON.stringify(resultadoStatusCurtida)}`); // transforma JSON em String
