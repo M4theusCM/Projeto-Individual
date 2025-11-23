@@ -51,12 +51,15 @@ function graficoInteracoesCurtidas(fkCriador) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", fkCriador)
     console.log(fkCriador)
     var instrucaoSql = `
-        SELECT idPoster, 
-            COUNT(fkPoster) AS qtdCurtidas
+        SELECT idPoster,
+            CASE
+                WHEN statusCurtida = 0 THEN 0
+                ELSE count(fkPoster)
+            END AS qtdCurtidas
             FROM poster p
-            LEFT JOIN curtida l ON p.idPoster = l.fkPoster AND p.fkCriador = l.fkCriador
-            GROUP BY idPoster 
-            ORDER BY p.idPoster DESC LIMIT 6;
+                LEFT JOIN curtida l ON p.idPoster = l.fkPoster AND p.fkCriador = l.fkCriador
+                GROUP BY idPoster, statusCurtida
+                ORDER BY p.idPoster DESC LIMIT 6;
     `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -68,7 +71,7 @@ function buscarkpis(fkCriador) {
     var instrucaoSql = `
         SELECT
             (SELECT COUNT(idPoster) FROM poster WHERE fkCriador = ${fkCriador}) AS totalPoster,
-            (SELECT COUNT(fkCriador) FROM curtida WHERE fkCriador = ${fkCriador}) AS totalCurtidas,
+            (SELECT COUNT(fkCriador) FROM curtida WHERE fkCriador = ${fkCriador} AND statusCurtida = 1) AS totalCurtidas,
             (SELECT COUNT(fkCriador) FROM comentario WHERE fkCriador = ${fkCriador}) AS totalComentarios,
             (SELECT COUNT(fkUsuario) FROM curtida WHERE fkUsuario = ${fkCriador}) AS curtidasEnviadas
             FROM poster WHERE fkCriador = ${fkCriador}
