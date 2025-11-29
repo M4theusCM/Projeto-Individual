@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../styles/gearup.css">
     <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../js/poster.js"></script>
+    <!-- <script src="../js/poster.js"></script> -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Figtree:ital,wght@0,300..900;1,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chewy&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -185,36 +185,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="card-preview" id="preview_formato_horizontal">
-                    <div class="img">
-                        <img src="../src/efeitos/gearup - efeito-claro.png" alt="img" id="preview_poster">
-                    </div>
-                    <div class="infos">
-                        <div class="perfil">
-                            <img src="" alt="" id="img_perfil_add_horizontal">
-                            <p id="nickName_user_add_horizontal">User name</p>
-                        </div>
-                        <div class="desc">
-                            <p id="desc_add_poter"></p>
-                        </div>
-                        <div class="estatisticas">
-                            <div>
-                                <img src="../src/icones/coracao.png" alt="">
-                                <p>6000</p>
-                                <span>Curtidas</span>
-                            </div>
-                            <div>
-                                <img src="../src/icones/comentarios.png" alt="">
-                                <p>6000</p>
-                                <span>Comentarios</span>
-                            </div>
-                        </div>
-                        <div class="comentarios">
-                            <div class="comentarios-card">Comentario</div>
-                            <div class="comentarios-card mg-0">Comentario</div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -224,11 +194,155 @@
 <!-- Funções -->
 <script>
     function exibirGeral() {
-       window.location = './perfil.html'
+        window.location = './perfil.html'
     }
 
     function exibirEstatisticas() {
-       window.location = './dashboard.html'
+        window.location = './dashboard.html'
+    }
+
+
+
+    // Modal
+
+
+    function adicionarPostagem() {
+        add_poster.style.display = 'flex'
+        var img_perfil = sessionStorage.IMG_USUARIO;
+        nickName_user_add_poster.innerHTML = sessionStorage.NICKNAME_USUARIO;
+        img_perfil_add_poster.src = `
+        ../src/perfils/${img_perfil}
+    `
+
+    }
+
+    function fecharModal() {
+        add_poster.style.display = 'none    '
+    }
+
+
+    function atualizarlegendaPreview() {
+        var legenda = txt_legenda.value
+        desc_add_poter.innerHTML = `${legenda}`
+    }
+
+    function atualizarPreview(valor) {
+        if (valor == 1) {
+            var file = ipt_img
+            console.log(file.value)
+            // if(file.value.includes('.mp4') == false){
+            //     preview_video.style.display = `none`
+            //     preview_poster.style.display = `block`
+            // }else{
+            //     preview_poster.style.display = `none`
+            //     preview_video.style.display = `block`
+            // }
+            // preview_poster.src = URL.createObjectURL(file.files[0]); // não posso usar pq não lembro como faz
+            preview_poster.src = '../src/posters/Group 21.png'
+
+        }
+    }
+
+    function formato() {
+        var tipo = select_formato.value
+        var poste = preview_formato_poster
+        var horizontal = preview_formato_horizontal
+        console.log(tipo)
+        // if (tipo == 0) {
+        //     poste.style.display = 'flex'
+        //     horizontal.style.display = 'none'
+        //     var img_perfil = sessionStorage.IMG_USUARIO;
+        //     nickName_user_add_poster.innerHTML = sessionStorage.NICKNAME_USUARIO;
+        //     img_perfil_add_poster.src = `
+        //     ../src/perfils/${img_perfil}
+        // `
+        // } else if (tipo == 1) {
+        //     poste.style.display = 'none'
+        //     horizontal.style.display = 'flex'
+        //     var img_perfil = sessionStorage.IMG_USUARIO;
+        //     nickName_user_add_horizontal.innerHTML = sessionStorage.NICKNAME_USUARIO;
+        //     img_perfil_add_horizontal.src = `
+        //     ../src/perfils/${img_perfil}
+        // `
+        // } else {
+
+        // }
+    }
+
+    function postar() {
+        var idCriador = sessionStorage.ID_USUARIO
+        var foto = ipt_img
+        var legenda = txt_legenda.value
+        var formato = select_formato.value
+        var categoria = select_categoria.value
+        var msg = `
+        Dados do poster: \n
+        ID Criador: ${idCriador} \n
+        foto Valor: ${foto.files[0]} \n
+        legenda: ${legenda} \n
+        formato: ${formato} \n
+        categoria: ${categoria} \n
+        foto Nome: ${foto.value} \n
+    `
+        const formData = new FormData();
+        formData.append('fkCriador', idCriador)
+        formData.append('poster', foto.files[0])
+        formData.append('legenda', legenda)
+        formData.append('formato', formato)
+        formData.append('tipo', categoria)
+
+        fetch("/poster/cadastro", {
+            method: "POST",
+            body: formData
+        })
+            .then(res => {
+                fecharModal()
+                buscarPosterUser()
+                // atualizações do banco
+
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    function buscarPosterUser() {
+        var fkCriador = sessionStorage.ID_USUARIO
+        fetch(`/poster/posterUser/${fkCriador}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+                    posterUsuario(resposta)
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ poster: ${error.message}`);
+            });
+    }
+
+    function posterUsuario(resposta) {
+        var todosPosters = resposta
+        var qtdPoster = todosPosters.length
+        console.log(qtdPoster)
+        var msg = ``
+        for (var i = 0; i < qtdPoster; i++) {
+            var posterAtual = todosPosters[i]
+            var imagem = posterAtual.poster
+            var qtdCurtidas = posterAtual.curtidas
+            msg += `
+        <div class="card-postagem">
+            <img src="../src/posters/${imagem}" alt="">
+            <div class="infos-postagem">
+                Curtidas: ${qtdCurtidas}
+            </div>
+        </div>
+    `
+        }
+        area_postagens_user.innerHTML = msg
     }
 
 </script>

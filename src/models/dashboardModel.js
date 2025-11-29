@@ -58,6 +58,7 @@ function graficoInteracoesCurtidas(fkCriador) {
             END AS qtdCurtidas
             FROM poster p
                 LEFT JOIN curtida l ON p.idPoster = l.fkPoster AND p.fkCriador = l.fkCriador
+                 WHERE p.fkCriador = ${fkCriador}
                 GROUP BY idPoster, statusCurtida
                 ORDER BY p.idPoster DESC LIMIT 6;
     `
