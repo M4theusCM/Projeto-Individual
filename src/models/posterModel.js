@@ -20,7 +20,10 @@ async function salvar(poster) {
 function posterUsuario(idCriador) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", idCriador)
     var instrucaoSql = `
-            SELECT idPoster, poster, COUNT(fkPoster) AS curtidas
+            SELECT idPoster, poster, COUNT(
+                CASE
+                    WHEN statusCurtida = 1 THEN 1
+                END) AS curtidas
 	        FROM poster p LEFT JOIN curtida c ON p.idPoster = c.fkPoster AND p.fkCriador = c.fkCriador
 	        WHERE p.fkCriador = ${idCriador} 
             GROUP BY idPoster

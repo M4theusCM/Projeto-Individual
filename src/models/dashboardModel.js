@@ -74,7 +74,7 @@ function buscarkpis(fkCriador) {
             (SELECT COUNT(idPoster) FROM poster WHERE fkCriador = ${fkCriador}) AS totalPoster,
             (SELECT COUNT(fkCriador) FROM curtida WHERE fkCriador = ${fkCriador} AND statusCurtida = 1) AS totalCurtidas,
             (SELECT COUNT(fkCriador) FROM comentario WHERE fkCriador = ${fkCriador}) AS totalComentarios,
-            (SELECT COUNT(fkUsuario) FROM curtida WHERE fkUsuario = ${fkCriador}) AS curtidasEnviadas
+            (SELECT COUNT(fkUsuario) FROM curtida WHERE fkUsuario = ${fkCriador} AND statusCurtida = 1) AS curtidasEnviadas
             FROM poster WHERE fkCriador = ${fkCriador}
             GROUP BY fkCriador;
         `
