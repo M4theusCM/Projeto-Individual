@@ -131,10 +131,10 @@
 <script>
     
     function exibirGraficos() {
+        buscarkpis()
         graficoQtdPoster()
         grafiTipos()
         graficosInteracoesCurtida()
-        buscarkpis()
     }
 
     function exibirGeral(){
@@ -189,7 +189,6 @@
                     vetortemp.push(resposta[0].qtdEvento)
                     vetortemp.push(resposta[0].qtdCarro)
                     qtdTipos = vetortemp
-
                     atualizarGraf2()
                 });
             } else {
