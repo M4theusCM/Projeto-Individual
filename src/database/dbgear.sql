@@ -227,3 +227,18 @@ insert into poster (idPoster, fkCriador, poster, legenda, formato, tipo, dtPosta
     
 DESC comentario;
 -- insert into comentario (idComentario, fkPosterm fkCriador) VALUES
+
+
+ SELECT COUNT(fkUsuario) AS statusCurtida FROM curtida
+        WHERE fkPoster = 4 AND fkUsuario = 4 AND fkCriador = 1 AND statusCurtida = 1;
+select * from curtida;
+
+SELECT
+	(SELECT COUNT(idPoster) FROM poster WHERE fkCriador = 4) AS totalPoster,
+    (SELECT COUNT(fkCriador) FROM curtida WHERE fkCriador = 4 AND statusCurtida = 1) AS totalCurtidas,
+    (SELECT COUNT(fkCriador) FROM comentario WHERE fkCriador = 4) AS totalComentarios,
+    (SELECT COUNT(fkUsuario) FROM curtida WHERE fkUsuario = 4 AND statusCurtida = 1) AS curtidasEnviadas
+    FROM poster WHERE fkCriador = 4 ;
+
+select * from usuario;
+SELECT COUNT(fkUsuario) FROM curtida WHERE fkUsuario = 4 AND statusCurtida = 1

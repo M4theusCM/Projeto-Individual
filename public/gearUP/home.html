@@ -137,11 +137,11 @@
                          ${comentarios}
                         <p>Ver mais</p>
                     </div>
-                    <div class="add-comentario" onclick="addComentario(${idPoster})">
+                    <div class="add-comentario" onclick="addComentario(${idPoster}, ${fkCriador})">
                         Comentar
                     </div>
-                    <div class="modal_add" id="modal_id_${idPoster}">
-                        <div class="fechar-add-poster" onclick="fecharModal(${idPoster})">
+                    <div class="modal_add" id="modal_id_${idPoster}_fkCriador_${fkCriador}">
+                        <div class="fechar-add-poster" onclick="fecharModal(${idPoster}, ${fkCriador})">
                             <img src="../src/acessos/Arrow 1.png" alt="Voltar">   
                         </div>
                         <label for="">
@@ -212,13 +212,13 @@
             });
     }
 
-    function addComentario(idPoster) {
-        var ipt = document.getElementById(`modal_id_${idPoster}`)
+    function addComentario(idPoster, fkCriador) {
+        var ipt = document.getElementById(`modal_id_${idPoster}_fkCriador_${fkCriador}`)
         ipt.style.display = `flex`
     }
 
-    function fecharModal(idPoster) {
-        var ipt = document.getElementById(`modal_id_${idPoster}`)
+    function fecharModal(idPoster, fkCriador) {
+        var ipt = document.getElementById(`modal_id_${idPoster}_fkCriador_${fkCriador}`)
         ipt.style.display = `none`
     }
 
@@ -357,14 +357,14 @@
                             if (tipo == 'inicializacao') {
                                 if (statusPost == 0) {
                                     // console.log(statusPost)
-                                    var imgTemp = `<img class="curtidaBotao" src="../src/icones/Coracao0.png" id="img_status_curtida_poster_${idPoster}" alt="Curtir">`
+                                    var imgTemp = `<img class="curtidaBotao" src="../src/icones/Coracao0.png" id="img_status_curtida_poster_${idPoster}_fkCriador_${fkCriador}" alt="Curtir">`
                                 } else {
-                                    var imgTemp = `<img class="curtidaBotao" src="../src/icones/coracao1.png" id="img_status_curtida_poster_${idPoster}" alt="Descurtir">`
+                                    var imgTemp = `<img class="curtidaBotao" src="../src/icones/coracao1.png" id="img_status_curtida_poster_${idPoster}_fkCriador_${fkCriador}" alt="Descurtir">`
                                 }
                                 return imgTemp
 
                             } else {
-                                var imgStatusCurtidaPoster = document.getElementById(`img_status_curtida_poster_${idPoster}`)
+                                var imgStatusCurtidaPoster = document.getElementById(`img_status_curtida_poster_${idPoster}_fkCriador_${fkCriador}`)
                                 // console.log(imgStatusCurtidaPoster)
                                 if (statusPost == 0) {
                                     // console.log(statusPost)
