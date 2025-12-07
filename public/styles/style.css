@@ -108,13 +108,12 @@ nav {
     visibility: hidden;
     overflow: hidden;
 }
-
+/* 
 #logo-img:hover + #logo-nome-img {
     visibility: visible;
     cursor: pointer;
-    /* animation: animation-logo 1s; */
     transition: 0.5s;
-}
+} */
 
 
 
@@ -584,7 +583,6 @@ footer .container {
     flex-direction: column;
     position: absolute;
     display: flex;
-    align-items: end;
     justify-content: end;
     padding: 2%;
 }
@@ -658,12 +656,3 @@ footer .copy p {
     font-weight: 400;
 }
 
-/*Animação*/
-@keyframes animation-logo{
-    0%{
-        width: 0px;
-    }
-    100%{
-        width: 150px;
-    }
-}

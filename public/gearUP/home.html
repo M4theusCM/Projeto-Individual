@@ -146,7 +146,7 @@
                         </div>
                         <label for="">
                             <h3>Digite o seu comentario:</h3>
-                            <textarea class="ipt-comentario" id="txt_comentario_${idPoster}"></textarea>
+                            <textarea class="ipt-comentario" id="txt_comentario_${idPoster}_fkCriador$${fkCriador}"></textarea>
                         </label>
                         <div  class="enviar">
                             <div onclick="enviar(${idPoster}, ${fkCriador})" class="button">
@@ -224,7 +224,7 @@
 
     function enviar(idPoster, fkCriador) {
         var fkUsuario = sessionStorage.ID_USUARIO
-        var txt_comentario = document.getElementById(`txt_comentario_${idPoster}`)
+        var txt_comentario = document.getElementById(`txt_comentario_${idPoster}_fkCriador$${fkCriador}`)
         var comentario = (txt_comentario.value).trim()
         if (comentario != '') {
             fetch("/comentarios/comentar", {
@@ -241,7 +241,7 @@
             })
                 .then(function (resposta) {
                     if (resposta.ok) {
-                        fecharModal(idPoster)
+                        fecharModal(idPoster, fkCriador)
                         atualizarPoster(idPoster, fkCriador, 'Comentario')
                     } else {
                         throw "Houve um erro ao tentar realizar o cadastro!";
